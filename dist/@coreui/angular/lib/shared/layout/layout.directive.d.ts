@@ -52,7 +52,7 @@ export declare class AsideToggleDirective implements OnInit {
 export declare class HtmlAttributesDirective implements OnInit {
     private renderer;
     private el;
-    appHtmlAttr: {
+    cuiHtmlAttr: {
         [key: string]: string;
     };
     constructor(renderer: Renderer2, el: ElementRef);

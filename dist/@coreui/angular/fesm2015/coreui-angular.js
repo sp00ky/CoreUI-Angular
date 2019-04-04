@@ -1,8 +1,8 @@
+import { DOCUMENT, CommonModule } from '@angular/common';
+import { Injectable, Inject, Renderer2, Directive, Input, HostListener, ElementRef, NgModule, Component, HostBinding } from '@angular/core';
+import { NavigationEnd, Router, ActivatedRoute, RouterModule } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { Router, ActivatedRoute, NavigationEnd, RouterModule } from '@angular/router';
-import { DOCUMENT, CommonModule } from '@angular/common';
-import { Inject, Injectable, Renderer2, Directive, ElementRef, HostListener, Input, NgModule, Component, HostBinding } from '@angular/core';
 
 /**
  * @fileoverview added by tsickle
@@ -115,7 +115,7 @@ class SidebarToggleDirective {
 }
 SidebarToggleDirective.decorators = [
     { type: Directive, args: [{
-                selector: '[appSidebarToggler]',
+                selector: '[cuiSidebarToggler]',
                 providers: [ClassToggler]
             },] }
 ];
@@ -124,7 +124,7 @@ SidebarToggleDirective.ctorParameters = () => [
     { type: ClassToggler }
 ];
 SidebarToggleDirective.propDecorators = {
-    breakpoint: [{ type: Input, args: ['appSidebarToggler',] }],
+    breakpoint: [{ type: Input, args: ['cuiSidebarToggler',] }],
     toggleOpen: [{ type: HostListener, args: ['click', ['$event'],] }]
 };
 class SidebarMinimizeDirective {
@@ -151,7 +151,7 @@ class SidebarMinimizeDirective {
 }
 SidebarMinimizeDirective.decorators = [
     { type: Directive, args: [{
-                selector: '[appSidebarMinimizer]'
+                selector: '[cuiSidebarMinimizer]'
             },] }
 ];
 /** @nocollapse */
@@ -186,7 +186,7 @@ class MobileSidebarToggleDirective {
 }
 MobileSidebarToggleDirective.decorators = [
     { type: Directive, args: [{
-                selector: '[appMobileSidebarToggler]'
+                selector: '[cuiMobileSidebarToggler]'
             },] }
 ];
 /** @nocollapse */
@@ -226,7 +226,7 @@ class SidebarOffCanvasCloseDirective {
 }
 SidebarOffCanvasCloseDirective.decorators = [
     { type: Directive, args: [{
-                selector: '[appSidebarClose]'
+                selector: '[cuiSidebarClose]'
             },] }
 ];
 /** @nocollapse */
@@ -261,7 +261,7 @@ class BrandMinimizeDirective {
 }
 BrandMinimizeDirective.decorators = [
     { type: Directive, args: [{
-                selector: '[appBrandMinimizer]'
+                selector: '[cuiBrandMinimizer]'
             },] }
 ];
 /** @nocollapse */
@@ -301,7 +301,7 @@ class AsideToggleDirective {
 }
 AsideToggleDirective.decorators = [
     { type: Directive, args: [{
-                selector: '[appAsideMenuToggler]',
+                selector: '[cuiAsideMenuToggler]',
                 providers: [ClassToggler]
             },] }
 ];
@@ -310,7 +310,7 @@ AsideToggleDirective.ctorParameters = () => [
     { type: ClassToggler }
 ];
 AsideToggleDirective.propDecorators = {
-    breakpoint: [{ type: Input, args: ['appAsideMenuToggler',] }],
+    breakpoint: [{ type: Input, args: ['cuiAsideMenuToggler',] }],
     toggleOpen: [{ type: HostListener, args: ['click', ['$event'],] }]
 };
 class HtmlAttributesDirective {
@@ -327,7 +327,7 @@ class HtmlAttributesDirective {
      */
     ngOnInit() {
         /** @type {?} */
-        const attribs = this.appHtmlAttr;
+        const attribs = this.cuiHtmlAttr;
         for (const attr in attribs) {
             if (attr === 'style' && typeof (attribs[attr]) === 'object') {
                 this.setStyle(attribs[attr]);
@@ -382,7 +382,7 @@ class HtmlAttributesDirective {
 }
 HtmlAttributesDirective.decorators = [
     { type: Directive, args: [{
-                selector: '[appHtmlAttr]'
+                selector: '[cuiHtmlAttr]'
             },] }
 ];
 /** @nocollapse */
@@ -391,7 +391,7 @@ HtmlAttributesDirective.ctorParameters = () => [
     { type: ElementRef }
 ];
 HtmlAttributesDirective.propDecorators = {
-    appHtmlAttr: [{ type: Input }]
+    cuiHtmlAttr: [{ type: Input }]
 };
 
 /**
@@ -438,22 +438,6 @@ LayoutModule.decorators = [
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
-/**
- * @param {?} el
- * @return {?}
- */
-function Replace(el) {
-    /** @type {?} */
-    const nativeElement = el.nativeElement;
-    /** @type {?} */
-    const parentElement = nativeElement.parentElement;
-    // move all children out of the element
-    while (nativeElement.firstChild) {
-        parentElement.insertBefore(nativeElement.firstChild, nativeElement);
-    }
-    // remove the empty element(the host)
-    parentElement.removeChild(nativeElement);
-}
 
 /**
  * @fileoverview added by tsickle
@@ -464,7 +448,7 @@ function Replace(el) {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
-class AppAsideComponent {
+class AsideComponent {
     /**
      * @param {?} document
      * @param {?} renderer
@@ -521,19 +505,20 @@ class AppAsideComponent {
         }
     }
 }
-AppAsideComponent.decorators = [
+AsideComponent.decorators = [
     { type: Component, args: [{
-                selector: 'app-aside, cui-aside',
-                template: `<ng-content></ng-content>`
+                selector: 'cui-aside',
+                template: "<aside class=\"aside-menu\">\n  <ng-content></ng-content>\n</aside>\n",
+                styles: [""]
             }] }
 ];
 /** @nocollapse */
-AppAsideComponent.ctorParameters = () => [
+AsideComponent.ctorParameters = () => [
     { type: undefined, decorators: [{ type: Inject, args: [DOCUMENT,] }] },
     { type: Renderer2 },
     { type: ElementRef }
 ];
-AppAsideComponent.propDecorators = {
+AsideComponent.propDecorators = {
     display: [{ type: Input }],
     fixed: [{ type: Input }],
     offCanvas: [{ type: Input }]
@@ -543,20 +528,20 @@ AppAsideComponent.propDecorators = {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
-class AppAsideModule {
+class AsideModule {
 }
-AppAsideModule.decorators = [
+AsideModule.decorators = [
     { type: NgModule, args: [{
                 imports: [
                     CommonModule,
                     LayoutModule
                 ],
                 exports: [
-                    AppAsideComponent,
+                    AsideComponent,
                     LayoutModule
                 ],
                 declarations: [
-                    AppAsideComponent
+                    AsideComponent
                 ]
             },] }
 ];
@@ -570,7 +555,7 @@ AppAsideModule.decorators = [
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
-class AppBreadcrumbService {
+class BreadcrumbService {
     /**
      * @param {?} router
      * @param {?} route
@@ -626,11 +611,11 @@ class AppBreadcrumbService {
         }));
     }
 }
-AppBreadcrumbService.decorators = [
+BreadcrumbService.decorators = [
     { type: Injectable }
 ];
 /** @nocollapse */
-AppBreadcrumbService.ctorParameters = () => [
+BreadcrumbService.ctorParameters = () => [
     { type: Router },
     { type: ActivatedRoute }
 ];
@@ -639,75 +624,7 @@ AppBreadcrumbService.ctorParameters = () => [
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
-class AppBreadcrumbComponent {
-    /**
-     * @param {?} document
-     * @param {?} renderer
-     * @param {?} service
-     * @param {?} el
-     */
-    constructor(document, renderer, service, el) {
-        this.document = document;
-        this.renderer = renderer;
-        this.service = service;
-        this.el = el;
-        this.fixedClass = 'breadcrumb-fixed';
-    }
-    /**
-     * @return {?}
-     */
-    ngOnInit() {
-        Replace(this.el);
-        this.isFixed(this.fixed);
-        this.breadcrumbs = this.service.breadcrumbs;
-    }
-    /**
-     * @return {?}
-     */
-    ngOnDestroy() {
-        this.renderer.removeClass(this.document.body, this.fixedClass);
-    }
-    /**
-     * @param {?=} fixed
-     * @return {?}
-     */
-    isFixed(fixed = this.fixed) {
-        if (fixed) {
-            this.renderer.addClass(this.document.body, this.fixedClass);
-        }
-    }
-}
-AppBreadcrumbComponent.decorators = [
-    { type: Component, args: [{
-                selector: 'app-breadcrumb',
-                template: `
-    <ng-template ngFor let-breadcrumb [ngForOf]="breadcrumbs | async" let-last = last>
-      <li class="breadcrumb-item"
-          *ngIf="breadcrumb.label.title && (breadcrumb.url.slice(-1) == '/' || last)"
-          [ngClass]="{active: last}">
-        <a *ngIf="!last" [routerLink]="breadcrumb.url">{{breadcrumb.label.title}}</a>
-        <span *ngIf="last" [routerLink]="breadcrumb.url">{{breadcrumb.label.title}}</span>
-      </li>
-    </ng-template>
-  `
-            }] }
-];
-/** @nocollapse */
-AppBreadcrumbComponent.ctorParameters = () => [
-    { type: undefined, decorators: [{ type: Inject, args: [DOCUMENT,] }] },
-    { type: Renderer2 },
-    { type: AppBreadcrumbService },
-    { type: ElementRef }
-];
-AppBreadcrumbComponent.propDecorators = {
-    fixed: [{ type: Input }]
-};
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class CuiBreadcrumbComponent {
+class BreadcrumbComponent {
     /**
      * @param {?} document
      * @param {?} renderer
@@ -742,19 +659,19 @@ class CuiBreadcrumbComponent {
         }
     }
 }
-CuiBreadcrumbComponent.decorators = [
+BreadcrumbComponent.decorators = [
     { type: Component, args: [{
                 selector: 'cui-breadcrumb',
                 template: "<ol class=\"breadcrumb\">\r\n  <ng-template ngFor let-breadcrumb [ngForOf]=\"breadcrumbs | async\" let-last = last>\r\n    <li class=\"breadcrumb-item\"\r\n        *ngIf=\"breadcrumb.label.title && (breadcrumb.url.slice(-1) == '/' || last)\"\r\n        [ngClass]=\"{active: last}\">\r\n      <a *ngIf=\"!last\" [routerLink]=\"breadcrumb.url\">{{breadcrumb.label.title}}</a>\r\n      <span *ngIf=\"last\" [routerLink]=\"breadcrumb.url\">{{breadcrumb.label.title}}</span>\r\n    </li>\r\n  </ng-template>\r\n  <ng-content></ng-content>\r\n</ol>\r\n"
             }] }
 ];
 /** @nocollapse */
-CuiBreadcrumbComponent.ctorParameters = () => [
+BreadcrumbComponent.ctorParameters = () => [
     { type: undefined, decorators: [{ type: Inject, args: [DOCUMENT,] }] },
     { type: Renderer2 },
-    { type: AppBreadcrumbService }
+    { type: BreadcrumbService }
 ];
-CuiBreadcrumbComponent.propDecorators = {
+BreadcrumbComponent.propDecorators = {
     fixed: [{ type: Input }]
 };
 
@@ -763,25 +680,25 @@ CuiBreadcrumbComponent.propDecorators = {
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 // @dynamic
-class AppBreadcrumbModule {
+class BreadcrumbModule {
     /**
      * @param {?=} config
      * @return {?}
      */
     static forRoot(config) {
         return {
-            ngModule: AppBreadcrumbModule,
+            ngModule: BreadcrumbModule,
             providers: [
-                AppBreadcrumbService
+                BreadcrumbService
             ]
         };
     }
 }
-AppBreadcrumbModule.decorators = [
+BreadcrumbModule.decorators = [
     { type: NgModule, args: [{
                 imports: [CommonModule, RouterModule],
-                exports: [AppBreadcrumbComponent, CuiBreadcrumbComponent],
-                declarations: [AppBreadcrumbComponent, CuiBreadcrumbComponent]
+                exports: [BreadcrumbComponent],
+                declarations: [BreadcrumbComponent]
             },] }
 ];
 
@@ -794,7 +711,7 @@ AppBreadcrumbModule.decorators = [
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
-class AppFooterComponent {
+class FooterComponent {
     /**
      * @param {?} document
      * @param {?} renderer
@@ -829,19 +746,19 @@ class AppFooterComponent {
         }
     }
 }
-AppFooterComponent.decorators = [
+FooterComponent.decorators = [
     { type: Component, args: [{
-                selector: 'app-footer, cui-footer',
+                selector: 'cui-footer',
                 template: `<ng-content></ng-content>`
             }] }
 ];
 /** @nocollapse */
-AppFooterComponent.ctorParameters = () => [
+FooterComponent.ctorParameters = () => [
     { type: undefined, decorators: [{ type: Inject, args: [DOCUMENT,] }] },
     { type: Renderer2 },
     { type: ElementRef }
 ];
-AppFooterComponent.propDecorators = {
+FooterComponent.propDecorators = {
     fixed: [{ type: Input }]
 };
 
@@ -849,13 +766,13 @@ AppFooterComponent.propDecorators = {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
-class AppFooterModule {
+class FooterModule {
 }
-AppFooterModule.decorators = [
+FooterModule.decorators = [
     { type: NgModule, args: [{
                 imports: [CommonModule],
-                exports: [AppFooterComponent],
-                declarations: [AppFooterComponent]
+                exports: [FooterComponent],
+                declarations: [FooterComponent]
             },] }
 ];
 
@@ -868,7 +785,7 @@ AppFooterModule.decorators = [
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
-class AppHeaderComponent {
+class HeaderComponent {
     /**
      * @param {?} document
      * @param {?} renderer
@@ -879,8 +796,7 @@ class AppHeaderComponent {
         this.renderer = renderer;
         this.hostElement = hostElement;
         this.navbarBrandText = { icon: '🅲', text: '🅲 CoreUI' };
-        this.navbarBrandHref = ''; // deprecated, use navbarBrandRouterLink instead
-        // deprecated, use navbarBrandRouterLink instead
+        // @Input() navbarBrandHref: string = ''; // deprecated, use navbarBrandRouterLink instead
         this.navbarBrandRouterLink = '';
         this.fixedClass = 'header-fixed';
         renderer.addClass(hostElement.nativeElement, 'app-header');
@@ -892,7 +808,7 @@ class AppHeaderComponent {
     ngOnInit() {
         this.isFixed(this.fixed);
         this.navbarBrandImg = Boolean(this.navbarBrand || this.navbarBrandFull || this.navbarBrandMinimized);
-        this.navbarBrandRouterLink = this.navbarBrandRouterLink[0] ? this.navbarBrandRouterLink : this.navbarBrandHref;
+        // this.navbarBrandRouterLink = this.navbarBrandRouterLink[0] ? this.navbarBrandRouterLink : this.navbarBrandHref;
     }
     /**
      * @return {?}
@@ -910,25 +826,24 @@ class AppHeaderComponent {
         }
     }
 }
-AppHeaderComponent.decorators = [
+HeaderComponent.decorators = [
     { type: Component, args: [{
-                selector: 'app-header, cui-header',
-                template: "<ng-template [ngIf]=\"mobileSidebarToggler != false\">\r\n  <button class=\"navbar-toggler d-lg-none\" type=\"button\" appSidebarToggler>\r\n    <span class=\"navbar-toggler-icon\"></span>\r\n  </button>\r\n</ng-template>\r\n<a class=\"navbar-brand\" [routerLink]=\"navbarBrandRouterLink\">\r\n  <ng-template [ngIf]=\"navbarBrandImg\">\r\n    <img *ngIf=\"navbarBrand\"\r\n         [appHtmlAttr]=\"navbarBrand\"\r\n         [ngClass]=\"'navbar-brand'\">\r\n    <img *ngIf=\"navbarBrandFull\"\r\n         [appHtmlAttr]=\"navbarBrandFull\"\r\n         [ngClass]=\"'navbar-brand-full'\">\r\n    <img *ngIf=\"navbarBrandMinimized\"\r\n         [appHtmlAttr]=\"navbarBrandMinimized\"\r\n         [ngClass]=\"'navbar-brand-minimized'\">\r\n  </ng-template>\r\n  <ng-template [ngIf]=\"!navbarBrandImg\">\r\n    <div class=\"navbar-brand-full\" [innerHTML]=\"navbarBrandText.text\"></div>\r\n    <div class=\"navbar-brand-minimized\" [innerHTML]=\"navbarBrandText.icon\"></div>\r\n  </ng-template>\r\n</a>\r\n<ng-template [ngIf]=\"sidebarToggler != false\">\r\n  <button class=\"navbar-toggler d-md-down-none\" type=\"button\" [appSidebarToggler]=\"sidebarToggler\">\r\n    <span class=\"navbar-toggler-icon\"></span>\r\n  </button>\r\n</ng-template>\r\n<ng-content></ng-content>\r\n<ng-template [ngIf]=\"asideMenuToggler != false\">\r\n  <button class=\"navbar-toggler d-md-down-none\" type=\"button\" [appAsideMenuToggler]=\"asideMenuToggler\">\r\n    <span class=\"navbar-toggler-icon\"></span>\r\n  </button>\r\n</ng-template>\r\n<ng-template [ngIf]=\"mobileAsideMenuToggler != false\">\r\n  <button class=\"navbar-toggler d-lg-none\" type=\"button\" appAsideMenuToggler>\r\n    <span class=\"navbar-toggler-icon\"></span>\r\n  </button>\r\n</ng-template>\r\n"
+                selector: 'cui-header',
+                template: "<ng-template [ngIf]=\"mobileSidebarToggler != false\">\n  <button class=\"navbar-toggler d-lg-none\" type=\"button\" cuiSidebarToggler>\n    <span class=\"navbar-toggler-icon\"></span>\n  </button>\n</ng-template>\n<a class=\"navbar-brand\" [routerLink]=\"navbarBrandRouterLink\">\n  <ng-template [ngIf]=\"navbarBrandImg\">\n    <img *ngIf=\"navbarBrand\"\n         [cuiHtmlAttr]=\"navbarBrand\"\n         [ngClass]=\"'navbar-brand'\">\n    <img *ngIf=\"navbarBrandFull\"\n         [cuiHtmlAttr]=\"navbarBrandFull\"\n         [ngClass]=\"'navbar-brand-full'\">\n    <img *ngIf=\"navbarBrandMinimized\"\n         [cuiHtmlAttr]=\"navbarBrandMinimized\"\n         [ngClass]=\"'navbar-brand-minimized'\">\n  </ng-template>\n  <ng-template [ngIf]=\"!navbarBrandImg\">\n    <div class=\"navbar-brand-full\" [innerHTML]=\"navbarBrandText.text\"></div>\n    <div class=\"navbar-brand-minimized\" [innerHTML]=\"navbarBrandText.icon\"></div>\n  </ng-template>\n</a>\n<ng-template [ngIf]=\"sidebarToggler != false\">\n  <button class=\"navbar-toggler d-md-down-none\" type=\"button\" [cuiSidebarToggler]=\"sidebarToggler\">\n    <span class=\"navbar-toggler-icon\"></span>\n  </button>\n</ng-template>\n<ng-content></ng-content>\n<ng-template [ngIf]=\"asideMenuToggler != false\">\n  <button class=\"navbar-toggler d-md-down-none\" type=\"button\" [cuiAsideMenuToggler]=\"asideMenuToggler\">\n    <span class=\"navbar-toggler-icon\"></span>\n  </button>\n</ng-template>\n<ng-template [ngIf]=\"mobileAsideMenuToggler != false\">\n  <button class=\"navbar-toggler d-lg-none\" type=\"button\" cuiAsideMenuToggler>\n    <span class=\"navbar-toggler-icon\"></span>\n  </button>\n</ng-template>\n"
             }] }
 ];
 /** @nocollapse */
-AppHeaderComponent.ctorParameters = () => [
+HeaderComponent.ctorParameters = () => [
     { type: undefined, decorators: [{ type: Inject, args: [DOCUMENT,] }] },
     { type: Renderer2 },
     { type: ElementRef }
 ];
-AppHeaderComponent.propDecorators = {
+HeaderComponent.propDecorators = {
     fixed: [{ type: Input }],
     navbarBrand: [{ type: Input }],
     navbarBrandFull: [{ type: Input }],
     navbarBrandMinimized: [{ type: Input }],
     navbarBrandText: [{ type: Input }],
-    navbarBrandHref: [{ type: Input }],
     navbarBrandRouterLink: [{ type: Input }],
     sidebarToggler: [{ type: Input }],
     mobileSidebarToggler: [{ type: Input }],
@@ -940,9 +855,9 @@ AppHeaderComponent.propDecorators = {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
-class AppHeaderModule {
+class HeaderModule {
 }
-AppHeaderModule.decorators = [
+HeaderModule.decorators = [
     { type: NgModule, args: [{
                 imports: [
                     CommonModule,
@@ -950,11 +865,11 @@ AppHeaderModule.decorators = [
                     LayoutModule
                 ],
                 exports: [
-                    AppHeaderComponent,
+                    HeaderComponent,
                     LayoutModule
                 ],
                 declarations: [
-                    AppHeaderComponent
+                    HeaderComponent
                 ]
             },] }
 ];
@@ -968,7 +883,7 @@ AppHeaderModule.decorators = [
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
-class AppSidebarComponent {
+class SidebarComponent {
     /**
      * @param {?} document
      * @param {?} renderer
@@ -1044,19 +959,19 @@ class AppSidebarComponent {
         }
     }
 }
-AppSidebarComponent.decorators = [
+SidebarComponent.decorators = [
     { type: Component, args: [{
-                selector: 'app-sidebar',
+                selector: 'cui-sidebar',
                 template: `<ng-content></ng-content>`
             }] }
 ];
 /** @nocollapse */
-AppSidebarComponent.ctorParameters = () => [
+SidebarComponent.ctorParameters = () => [
     { type: undefined, decorators: [{ type: Inject, args: [DOCUMENT,] }] },
     { type: Renderer2 },
     { type: ElementRef }
 ];
-AppSidebarComponent.propDecorators = {
+SidebarComponent.propDecorators = {
     compact: [{ type: Input }],
     display: [{ type: Input }],
     fixed: [{ type: Input }],
@@ -1068,7 +983,7 @@ AppSidebarComponent.propDecorators = {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
-class AppSidebarFooterComponent {
+class SidebarFooterComponent {
     /**
      * @param {?} renderer
      * @param {?} hostElement
@@ -1083,14 +998,14 @@ class AppSidebarFooterComponent {
      */
     ngOnInit() { }
 }
-AppSidebarFooterComponent.decorators = [
+SidebarFooterComponent.decorators = [
     { type: Component, args: [{
-                selector: 'app-sidebar-footer',
+                selector: 'cui-sidebar-footer',
                 template: `<ng-content></ng-content>`
             }] }
 ];
 /** @nocollapse */
-AppSidebarFooterComponent.ctorParameters = () => [
+SidebarFooterComponent.ctorParameters = () => [
     { type: Renderer2 },
     { type: ElementRef }
 ];
@@ -1099,7 +1014,7 @@ AppSidebarFooterComponent.ctorParameters = () => [
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
-class AppSidebarFormComponent {
+class SidebarFormComponent {
     /**
      * @param {?} renderer
      * @param {?} hostElement
@@ -1114,14 +1029,14 @@ class AppSidebarFormComponent {
      */
     ngOnInit() { }
 }
-AppSidebarFormComponent.decorators = [
+SidebarFormComponent.decorators = [
     { type: Component, args: [{
-                selector: 'app-sidebar-form',
+                selector: 'cui-sidebar-form',
                 template: `<ng-content></ng-content>`
             }] }
 ];
 /** @nocollapse */
-AppSidebarFormComponent.ctorParameters = () => [
+SidebarFormComponent.ctorParameters = () => [
     { type: Renderer2 },
     { type: ElementRef }
 ];
@@ -1130,7 +1045,7 @@ AppSidebarFormComponent.ctorParameters = () => [
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
-class AppSidebarHeaderComponent {
+class SidebarHeaderComponent {
     /**
      * @param {?} renderer
      * @param {?} hostElement
@@ -1145,14 +1060,14 @@ class AppSidebarHeaderComponent {
      */
     ngOnInit() { }
 }
-AppSidebarHeaderComponent.decorators = [
+SidebarHeaderComponent.decorators = [
     { type: Component, args: [{
-                selector: 'app-sidebar-header',
+                selector: 'cui-sidebar-header',
                 template: `<ng-content></ng-content>`
             }] }
 ];
 /** @nocollapse */
-AppSidebarHeaderComponent.ctorParameters = () => [
+SidebarHeaderComponent.ctorParameters = () => [
     { type: Renderer2 },
     { type: ElementRef }
 ];
@@ -1161,7 +1076,7 @@ AppSidebarHeaderComponent.ctorParameters = () => [
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
-class AppSidebarMinimizerComponent {
+class SidebarMinimizerComponent {
     /**
      * @param {?} document
      * @param {?} renderer
@@ -1194,19 +1109,19 @@ class AppSidebarMinimizerComponent {
      */
     ngOnInit() { }
 }
-AppSidebarMinimizerComponent.decorators = [
+SidebarMinimizerComponent.decorators = [
     { type: Component, args: [{
-                selector: 'app-sidebar-minimizer',
+                selector: 'cui-sidebar-minimizer',
                 template: ``
             }] }
 ];
 /** @nocollapse */
-AppSidebarMinimizerComponent.ctorParameters = () => [
+SidebarMinimizerComponent.ctorParameters = () => [
     { type: undefined, decorators: [{ type: Inject, args: [DOCUMENT,] }] },
     { type: Renderer2 },
     { type: ElementRef }
 ];
-AppSidebarMinimizerComponent.propDecorators = {
+SidebarMinimizerComponent.propDecorators = {
     role: [{ type: HostBinding, args: ['attr.role',] }],
     toggleOpen: [{ type: HostListener, args: ['click', ['$event'],] }]
 };
@@ -1231,7 +1146,7 @@ class NavDropdownDirective {
 }
 NavDropdownDirective.decorators = [
     { type: Directive, args: [{
-                selector: '[appNavDropdown]'
+                selector: '[cuiNavDropdown]'
             },] }
 ];
 /** @nocollapse */
@@ -1259,7 +1174,7 @@ class NavDropdownToggleDirective {
 }
 NavDropdownToggleDirective.decorators = [
     { type: Directive, args: [{
-                selector: '[appNavDropdownToggle]'
+                selector: '[cuiNavDropdownToggle]'
             },] }
 ];
 /** @nocollapse */
@@ -1274,7 +1189,7 @@ NavDropdownToggleDirective.propDecorators = {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
-class AppSidebarNavComponent {
+class SidebarNavComponent {
     /**
      * @param {?} router
      * @param {?} renderer
@@ -1295,19 +1210,19 @@ class AppSidebarNavComponent {
         this.navItemsArray = JSON.parse(JSON.stringify(this.navItems || []));
     }
 }
-AppSidebarNavComponent.decorators = [
+SidebarNavComponent.decorators = [
     { type: Component, args: [{
-                selector: 'app-sidebar-nav',
-                template: "<app-sidebar-nav-items\r\n  class=\"nav\"\r\n  [items]=\"navItemsArray\">\r\n</app-sidebar-nav-items>\r\n"
+                selector: 'cui-sidebar-nav',
+                template: "<cui-sidebar-nav-items\n  class=\"nav\"\n  [items]=\"navItemsArray\">\n</cui-sidebar-nav-items>\n"
             }] }
 ];
 /** @nocollapse */
-AppSidebarNavComponent.ctorParameters = () => [
+SidebarNavComponent.ctorParameters = () => [
     { type: Router },
     { type: Renderer2 },
     { type: ElementRef }
 ];
-AppSidebarNavComponent.propDecorators = {
+SidebarNavComponent.propDecorators = {
     navItems: [{ type: Input }],
     role: [{ type: HostBinding, args: ['attr.role',] }]
 };
@@ -1316,22 +1231,22 @@ AppSidebarNavComponent.propDecorators = {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
-class AppSidebarNavDividerComponent {
+class SidebarNavDividerComponent {
     constructor() { }
     /**
      * @return {?}
      */
     ngOnInit() { }
 }
-AppSidebarNavDividerComponent.decorators = [
+SidebarNavDividerComponent.decorators = [
     { type: Component, args: [{
-                selector: 'app-sidebar-nav-divider',
+                selector: 'cui-sidebar-nav-divider',
                 template: ``
             }] }
 ];
 /** @nocollapse */
-AppSidebarNavDividerComponent.ctorParameters = () => [];
-AppSidebarNavDividerComponent.propDecorators = {
+SidebarNavDividerComponent.ctorParameters = () => [];
+SidebarNavDividerComponent.propDecorators = {
     item: [{ type: Input }]
 };
 
@@ -1438,7 +1353,7 @@ class SidebarNavHelper {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
-class AppSidebarNavDropdownComponent {
+class SidebarNavDropdownComponent {
     /**
      * @param {?} helper
      */
@@ -1446,21 +1361,21 @@ class AppSidebarNavDropdownComponent {
         this.helper = helper;
     }
 }
-AppSidebarNavDropdownComponent.decorators = [
+SidebarNavDropdownComponent.decorators = [
     { type: Component, args: [{
-                selector: 'app-sidebar-nav-dropdown',
+                selector: 'cui-sidebar-nav-dropdown',
                 template: `
     <a class="nav-link nav-dropdown-toggle"
-       appNavDropdownToggle
-       [appHtmlAttr]="item.attributes">
+       cuiNavDropdownToggle
+       [cuiHtmlAttr]="item.attributes">
       <i *ngIf="helper.hasIcon(item)" [ngClass]="helper.getIconClass(item)"></i>
       <ng-container>{{item.name}}</ng-container>
       <span *ngIf="helper.hasBadge(item)" [ngClass]="helper.getBadgeClass(item)">{{ item.badge.text }}</span>
     </a>
-    <app-sidebar-nav-items
+    <cui-sidebar-nav-items
       class="nav-dropdown-items"
       [items]="item.children">
-    </app-sidebar-nav-items>
+    </cui-sidebar-nav-items>
   `,
                 providers: [SidebarNavHelper],
                 styles: ['.nav-dropdown-toggle { cursor: pointer; }',
@@ -1468,10 +1383,10 @@ AppSidebarNavDropdownComponent.decorators = [
             }] }
 ];
 /** @nocollapse */
-AppSidebarNavDropdownComponent.ctorParameters = () => [
+SidebarNavDropdownComponent.ctorParameters = () => [
     { type: SidebarNavHelper }
 ];
-AppSidebarNavDropdownComponent.propDecorators = {
+SidebarNavDropdownComponent.propDecorators = {
     item: [{ type: Input }]
 };
 
@@ -1479,7 +1394,7 @@ AppSidebarNavDropdownComponent.propDecorators = {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
-class AppSidebarNavItemsComponent {
+class SidebarNavItemsComponent {
     /**
      * @param {?} router
      * @param {?} helper
@@ -1489,58 +1404,58 @@ class AppSidebarNavItemsComponent {
         this.helper = helper;
     }
 }
-AppSidebarNavItemsComponent.decorators = [
+SidebarNavItemsComponent.decorators = [
     { type: Component, args: [{
-                selector: 'app-sidebar-nav-items',
+                selector: 'cui-sidebar-nav-items',
                 template: `
     <ng-container *ngFor="let item of items">
       <ng-container [ngSwitch]="helper.itemType(item)">
-        <app-sidebar-nav-dropdown
+        <cui-sidebar-nav-dropdown
           *ngSwitchCase="'dropdown'"
           [item]="item"
           [class.open]="helper.isActive(router, item)"
           [ngClass]="helper.getClass(item)"
-          appNavDropdown
+          cuiNavDropdown
           routerLinkActive="open">
-        </app-sidebar-nav-dropdown>
-        <app-sidebar-nav-divider
+        </cui-sidebar-nav-dropdown>
+        <cui-sidebar-nav-divider
           *ngSwitchCase="'divider'"
           [item]="item"
           [ngClass]="helper.getClass(item)"
-          [appHtmlAttr]="item.attributes">
-        </app-sidebar-nav-divider>
-        <app-sidebar-nav-title
+          [cuiHtmlAttr]="item.attributes">
+        </cui-sidebar-nav-divider>
+        <cui-sidebar-nav-title
           *ngSwitchCase="'title'"
           [item]="item"
           [ngClass]="helper.getClass(item)"
-          [appHtmlAttr]="item.attributes">
-        </app-sidebar-nav-title>
-        <app-sidebar-nav-label
+          [cuiHtmlAttr]="item.attributes">
+        </cui-sidebar-nav-title>
+        <cui-sidebar-nav-label
           *ngSwitchCase="'label'"
           [item]="item"
           class="nav-item"
           [ngClass]="helper.getClass(item)">
-        </app-sidebar-nav-label>
+        </cui-sidebar-nav-label>
         <ng-container
           *ngSwitchCase="'empty'">
         </ng-container>
-        <app-sidebar-nav-link
+        <cui-sidebar-nav-link
           *ngSwitchDefault
           [item]="item"
           class="nav-item"
           [ngClass]="helper.getClass(item)">
-        </app-sidebar-nav-link>
+        </cui-sidebar-nav-link>
       </ng-container>
     </ng-container>
   `
             }] }
 ];
 /** @nocollapse */
-AppSidebarNavItemsComponent.ctorParameters = () => [
+SidebarNavItemsComponent.ctorParameters = () => [
     { type: Router },
     { type: SidebarNavHelper }
 ];
-AppSidebarNavItemsComponent.propDecorators = {
+SidebarNavItemsComponent.propDecorators = {
     items: [{ type: Input }]
 };
 
@@ -1548,7 +1463,7 @@ AppSidebarNavItemsComponent.propDecorators = {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
-class AppSidebarNavLinkComponent {
+class SidebarNavLinkComponent {
     /**
      * @param {?} document
      * @param {?} renderer
@@ -1618,20 +1533,20 @@ class AppSidebarNavLinkComponent {
         }
     }
 }
-AppSidebarNavLinkComponent.decorators = [
+SidebarNavLinkComponent.decorators = [
     { type: Component, args: [{
-                selector: 'app-sidebar-nav-link',
-                template: "<ng-container [ngSwitch]=\"linkType\">\r\n  <a *ngSwitchCase=\"'external'\"\r\n    [ngClass]=\"getLinkClass()\"\r\n    href=\"{{item.url}}\"\r\n    [appHtmlAttr]=\"item.attributes\">\r\n    <i *ngIf=\"helper.hasIcon(item)\" [ngClass]=\"helper.getIconClass(item)\"></i>\r\n    <ng-container>{{item.name}}</ng-container>\r\n    <span *ngIf=\"helper.hasBadge(item)\" [ngClass]=\"helper.getBadgeClass(item)\">{{ item.badge.text }}</span>\r\n  </a>\r\n  <a *ngSwitchDefault\r\n     [ngClass]=\"getLinkClass()\"\r\n     [appHtmlAttr]=\"item.attributes\"\r\n     [attr.disabled]=\"isDisabled()\"\r\n     routerLinkActive=\"active\"\r\n     [routerLink]=\"[item.url]\"\r\n     (click)=\"hideMobile()\">\r\n    <i *ngIf=\"helper.hasIcon(item)\" [ngClass]=\"helper.getIconClass(item)\"></i>\r\n    <ng-container>{{item.name}}</ng-container>\r\n    <span *ngIf=\"helper.hasBadge(item)\" [ngClass]=\"helper.getBadgeClass(item)\">{{ item.badge.text }}</span>\r\n  </a>\r\n</ng-container>\r\n",
+                selector: 'cui-sidebar-nav-link',
+                template: "<ng-container [ngSwitch]=\"linkType\">\n  <a *ngSwitchCase=\"'external'\"\n    [ngClass]=\"getLinkClass()\"\n    href=\"{{item.url}}\"\n    [cuiHtmlAttr]=\"item.attributes\">\n    <i *ngIf=\"helper.hasIcon(item)\" [ngClass]=\"helper.getIconClass(item)\"></i>\n    <ng-container>{{item.name}}</ng-container>\n    <span *ngIf=\"helper.hasBadge(item)\" [ngClass]=\"helper.getBadgeClass(item)\">{{ item.badge.text }}</span>\n  </a>\n  <a *ngSwitchDefault\n     [ngClass]=\"getLinkClass()\"\n     [cuiHtmlAttr]=\"item.attributes\"\n     [attr.disabled]=\"isDisabled()\"\n     routerLinkActive=\"active\"\n     [routerLink]=\"[item.url]\"\n     (click)=\"hideMobile()\">\n    <i *ngIf=\"helper.hasIcon(item)\" [ngClass]=\"helper.getIconClass(item)\"></i>\n    <ng-container>{{item.name}}</ng-container>\n    <span *ngIf=\"helper.hasBadge(item)\" [ngClass]=\"helper.getBadgeClass(item)\">{{ item.badge.text }}</span>\n  </a>\n</ng-container>\n",
                 providers: [SidebarNavHelper]
             }] }
 ];
 /** @nocollapse */
-AppSidebarNavLinkComponent.ctorParameters = () => [
+SidebarNavLinkComponent.ctorParameters = () => [
     { type: undefined, decorators: [{ type: Inject, args: [DOCUMENT,] }] },
     { type: Renderer2 },
     { type: SidebarNavHelper }
 ];
-AppSidebarNavLinkComponent.propDecorators = {
+SidebarNavLinkComponent.propDecorators = {
     item: [{ type: Input }]
 };
 
@@ -1639,7 +1554,7 @@ AppSidebarNavLinkComponent.propDecorators = {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
-class AppSidebarNavTitleComponent {
+class SidebarNavTitleComponent {
     /**
      * @param {?} el
      * @param {?} renderer
@@ -1736,18 +1651,18 @@ class AppSidebarNavTitleComponent {
         this.renderer.setAttribute(el, key, value);
     }
 }
-AppSidebarNavTitleComponent.decorators = [
+SidebarNavTitleComponent.decorators = [
     { type: Component, args: [{
-                selector: 'app-sidebar-nav-title',
+                selector: 'cui-sidebar-nav-title',
                 template: ''
             }] }
 ];
 /** @nocollapse */
-AppSidebarNavTitleComponent.ctorParameters = () => [
+SidebarNavTitleComponent.ctorParameters = () => [
     { type: ElementRef },
     { type: Renderer2 }
 ];
-AppSidebarNavTitleComponent.propDecorators = {
+SidebarNavTitleComponent.propDecorators = {
     item: [{ type: Input }]
 };
 
@@ -1755,7 +1670,7 @@ AppSidebarNavTitleComponent.propDecorators = {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
-class AppSidebarNavLabelComponent {
+class SidebarNavLabelComponent {
     /**
      * @param {?} helper
      */
@@ -1796,17 +1711,17 @@ class AppSidebarNavLabelComponent {
         return classes;
     }
 }
-AppSidebarNavLabelComponent.decorators = [
+SidebarNavLabelComponent.decorators = [
     { type: Component, args: [{
-                selector: 'app-sidebar-nav-label',
-                template: "<a [ngClass]=\"getItemClass()\"\r\n   href=\"{{item.url}}\"\r\n   [appHtmlAttr]=\"item.attributes\">\r\n  <i *ngIf=\"helper.hasIcon(item)\" [ngClass]=\"getLabelIconClass()\"></i>\r\n  <ng-container>{{item.name}}</ng-container>\r\n  <span *ngIf=\"helper.hasBadge(item)\" [ngClass]=\"helper.getBadgeClass(item)\">{{ item.badge.text }}</span>\r\n</a>\r\n"
+                selector: 'cui-sidebar-nav-label',
+                template: "<a [ngClass]=\"getItemClass()\"\n   href=\"{{item.url}}\"\n   [cuiHtmlAttr]=\"item.attributes\">\n  <i *ngIf=\"helper.hasIcon(item)\" [ngClass]=\"getLabelIconClass()\"></i>\n  <ng-container>{{item.name}}</ng-container>\n  <span *ngIf=\"helper.hasBadge(item)\" [ngClass]=\"helper.getBadgeClass(item)\">{{ item.badge.text }}</span>\n</a>\n"
             }] }
 ];
 /** @nocollapse */
-AppSidebarNavLabelComponent.ctorParameters = () => [
+SidebarNavLabelComponent.ctorParameters = () => [
     { type: SidebarNavHelper }
 ];
-AppSidebarNavLabelComponent.propDecorators = {
+SidebarNavLabelComponent.propDecorators = {
     item: [{ type: Input }]
 };
 
@@ -1814,9 +1729,9 @@ AppSidebarNavLabelComponent.propDecorators = {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
-class AppSidebarModule {
+class SidebarModule {
 }
-AppSidebarModule.decorators = [
+SidebarModule.decorators = [
     { type: NgModule, args: [{
                 imports: [
                     CommonModule,
@@ -1824,37 +1739,37 @@ AppSidebarModule.decorators = [
                     LayoutModule
                 ],
                 exports: [
-                    AppSidebarFooterComponent,
-                    AppSidebarFormComponent,
-                    AppSidebarHeaderComponent,
-                    AppSidebarMinimizerComponent,
-                    AppSidebarComponent,
-                    AppSidebarNavItemsComponent,
-                    AppSidebarNavComponent,
-                    AppSidebarNavDividerComponent,
-                    AppSidebarNavDropdownComponent,
-                    AppSidebarNavLinkComponent,
-                    AppSidebarNavTitleComponent,
+                    SidebarFooterComponent,
+                    SidebarFormComponent,
+                    SidebarHeaderComponent,
+                    SidebarMinimizerComponent,
+                    SidebarComponent,
+                    SidebarNavItemsComponent,
+                    SidebarNavComponent,
+                    SidebarNavDividerComponent,
+                    SidebarNavDropdownComponent,
+                    SidebarNavLinkComponent,
+                    SidebarNavTitleComponent,
                     NavDropdownDirective,
                     NavDropdownToggleDirective,
                     LayoutModule
                 ],
                 declarations: [
-                    AppSidebarFooterComponent,
-                    AppSidebarFormComponent,
-                    AppSidebarHeaderComponent,
-                    AppSidebarMinimizerComponent,
-                    AppSidebarMinimizerComponent,
-                    AppSidebarComponent,
-                    AppSidebarNavItemsComponent,
-                    AppSidebarNavComponent,
-                    AppSidebarNavDividerComponent,
-                    AppSidebarNavDropdownComponent,
-                    AppSidebarNavLinkComponent,
-                    AppSidebarNavTitleComponent,
+                    SidebarFooterComponent,
+                    SidebarFormComponent,
+                    SidebarHeaderComponent,
+                    SidebarMinimizerComponent,
+                    SidebarMinimizerComponent,
+                    SidebarComponent,
+                    SidebarNavItemsComponent,
+                    SidebarNavComponent,
+                    SidebarNavDividerComponent,
+                    SidebarNavDropdownComponent,
+                    SidebarNavLinkComponent,
+                    SidebarNavTitleComponent,
                     NavDropdownDirective,
                     NavDropdownToggleDirective,
-                    AppSidebarNavLabelComponent
+                    SidebarNavLabelComponent
                 ],
                 providers: [
                     SidebarNavHelper
@@ -1877,6 +1792,5 @@ AppSidebarModule.decorators = [
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { AppAsideModule, AppBreadcrumbModule, AppFooterModule, AppHeaderModule, AppSidebarModule, AppAsideComponent as ɵj, AppBreadcrumbComponent as ɵk, AppBreadcrumbService as ɵl, CuiBreadcrumbComponent as ɵm, AppFooterComponent as ɵn, AppHeaderComponent as ɵo, AsideToggleDirective as ɵg, BrandMinimizeDirective as ɵf, HtmlAttributesDirective as ɵh, MobileSidebarToggleDirective as ɵd, SidebarMinimizeDirective as ɵc, SidebarOffCanvasCloseDirective as ɵe, SidebarToggleDirective as ɵb, LayoutModule as ɵa, ClassToggler as ɵi, AppSidebarFooterComponent as ɵp, AppSidebarFormComponent as ɵq, AppSidebarHeaderComponent as ɵr, AppSidebarMinimizerComponent as ɵs, AppSidebarNavComponent as ɵw, NavDropdownDirective as ɵbb, NavDropdownToggleDirective as ɵbc, SidebarNavHelper as ɵv, AppSidebarNavDividerComponent as ɵx, AppSidebarNavDropdownComponent as ɵy, AppSidebarNavItemsComponent as ɵu, AppSidebarNavLabelComponent as ɵbd, AppSidebarNavLinkComponent as ɵz, AppSidebarNavTitleComponent as ɵba, AppSidebarComponent as ɵt };
-
+export { AsideModule, BreadcrumbModule, FooterModule, HeaderModule, SidebarModule };
 //# sourceMappingURL=coreui-angular.js.map

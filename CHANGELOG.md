@@ -219,7 +219,7 @@
 ##### `v2.2.1`
 - fix: remove `-fixed` class on layout components destroy
 - chore: commit `package-lock.json`
-- chore: add [README](./projects/coreui/angular/README.md) 
+- chore: add [README](projects/coreui-angular/README.md) 
 - update: `core-js` to `2.6.0`
 - update: `@angular-devkit/build-angular` to `0.11.1`
 - update: `@angular-devkit/build-ng-packagr` to `0.11.1`

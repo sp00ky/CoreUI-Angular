@@ -1,0 +1,32 @@
+{
+  "name": "@coreui/angular",
+  "version": "3.0.0-alpha",
+  "description": "CoreUI v3 Angular Bootstrap 4 components library",
+  "license": "MIT",
+  "homepage": "https://coreui.io/angular",
+  "author": {
+    "name": "Łukasz Holeczek",
+    "url": "http://holeczek.pl",
+    "github": "https://github.com/mrholek",
+    "twitter": "https://twitter.com/lukaszholeczek"
+  },
+  "contributors": [
+    {
+      "name": "Andrzej Kopański",
+      "url": "https://github.com/xidedix"
+    }
+  ],
+  "peerDependencies": {
+    "@angular/common": "^7.2.12",
+    "@angular/core": "^7.2.12",
+    "@angular/router": "^7.2.12",
+    "@coreui/coreui": "^2.1.9"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/coreui/coreui-angular.git"
+  },
+  "bugs": {
+    "url": "https://github.com/coreui/coreui-angular/issues"
+  }
+}
