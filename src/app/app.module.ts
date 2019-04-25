@@ -16,6 +16,9 @@ import { AppComponent } from './app.component';
 // Import containers
 import { DefaultLayoutComponent } from './containers';
 
+import { P404Component } from './views/error/404.component';
+import { P500Component } from './views/error/500.component';
+
 const APP_CONTAINERS = [
   DefaultLayoutComponent
 ];
@@ -25,7 +28,9 @@ import {
   BreadcrumbModule,
   HeaderModule,
   FooterModule,
+  NavbarModule,
   SidebarModule,
+  TogglerModule,
 } from '@coreui/angular';
 
 // Import routing module
@@ -44,14 +49,18 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
     BreadcrumbModule.forRoot(),
     FooterModule,
     HeaderModule,
+    NavbarModule,
     SidebarModule,
     PerfectScrollbarModule,
     BsDropdownModule.forRoot(),
     TabsModule.forRoot(),
+    TogglerModule
   ],
   declarations: [
     AppComponent,
-    ...APP_CONTAINERS
+    ...APP_CONTAINERS,
+    P404Component,
+    P500Component
   ],
   providers: [{
     provide: LocationStrategy,

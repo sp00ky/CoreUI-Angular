@@ -38,5 +38,42 @@ export const navItems: NavData[] = [
       variant: 'info',
       text: 'NEW'
     }
-  }
+  },
+  {
+    name: 'Colors',
+    url: '/theme/colors',
+    icon: 'cui-drop'
+  },
+  {
+    name: 'Typography',
+    url: '/theme/typography',
+    icon: 'cui-pencil'
+  },
+  {
+    name: 'Pages',
+    url: '/pages',
+    icon: 'cui-star',
+    children: [
+      {
+        name: 'Error 404',
+        url: '/404',
+        icon: 'cui-star'
+      },
+      {
+        name: 'Error 500',
+        url: '/500',
+        icon: 'cui-circle-x'
+      }
+    ]
+  },
+  {
+    name: 'Disabled',
+    url: '/dashboard',
+    icon: 'cui-ban',
+    badge: {
+      variant: 'secondary',
+      text: 'NEW'
+    },
+    attributes: { disabled: true },
+  },
 ];

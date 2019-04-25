@@ -1,10 +1,11 @@
-<cui-header
-  [navbarBrandRouterLink]="['/dashboard']"
-  [fixed]="true"
-  [navbarBrandFull]="{src: 'assets/img/brand/logo.svg', width: 89, height: 25, alt: 'CoreUI Logo'}"
-  [navbarBrandMinimized]="{src: 'assets/img/brand/sygnet.svg', width: 30, height: 30, alt: 'CoreUI Logo'}"
-  [sidebarToggler]="'lg'"
-  [asideMenuToggler]="'lg'">
+<cui-header [fixed]="true">
+  <cui-toggler class="d-lg-none" cuiSidebarToggle></cui-toggler>
+  <cui-navbar-brand
+    [navbarBrandRouterLink]="['/dashboard']"
+    [navbarBrandFull]="{src: 'assets/img/brand/logo.svg', width: 89, height: 25, alt: 'CoreUI Logo'}"
+    [navbarBrandMinimized]="{src: 'assets/img/brand/sygnet.svg', width: 30, height: 30, alt: 'CoreUI Logo'}"
+  ></cui-navbar-brand>
+  <cui-toggler class="d-md-down-none" cuiSidebarToggle="lg"></cui-toggler>
   <ul class="nav navbar-nav d-md-down-none mr-auto">
     <li class="nav-item px-3">
       <a class="nav-link" href="#">Dashboard</a>
@@ -41,11 +42,13 @@
       </div>
     </li>
   </ul>
+  <cui-toggler class="d-md-down-none" [cuiAsideMenuToggle]="'lg'"></cui-toggler>
+  <cui-toggler class="d-lg-none" cuiAsideMenuToggle></cui-toggler>
 </cui-header>
 <div class="app-body">
-  <cui-sidebar [fixed]="true" [display]="'lg'">
+  <cui-sidebar [fixed]="true" [display]="'lg'" [opened]="true">
     <cui-sidebar-nav [navItems]="navItems" [perfectScrollbar] [disabled]="sidebarMinimized"></cui-sidebar-nav>
-    <cui-sidebar-minimizer></cui-sidebar-minimizer>
+    <cui-sidebar-minimizer cuiSidebarMinimize cuiBrandMinimize></cui-sidebar-minimizer>
   </cui-sidebar>
   <!-- Main content -->
   <main class="main">
@@ -56,10 +59,19 @@
     </div><!-- /.container-fluid -->
   </main>
   <cui-aside [fixed]="true" [display]="false">
-
+    <cui-toggler cuiSidebarToggle="lg">
+      <button class="navbar-toggler" type="button">
+        <span class="cui-layers align-middle h2"></span>
+      </button>
+    </cui-toggler>
+    <button cuiSidebarMinimize>Sidebar minimizer</button>
+    <br/>
+    <button cuiSidebarToggle="lg">Sidebar toggler</button>
+    <br/>
+    <button cuiSidebarToggle>Sidebar mobile toggler</button>
   </cui-aside>
 </div>
 <cui-footer>
   <span><a href="https://coreui.io/pro/angular/">CoreUI</a> &copy; 2019 creativeLabs.</span>
-  <span class="ml-auto">Powered by <a href="https://coreui.io/pro/angular">CoreUI Pro for Angular</a></span>
+  <span class="ml-auto">Powered by <a href="https://coreui.io/pro/angular">CoreUI v3 for Angular</a></span>
 </cui-footer>
