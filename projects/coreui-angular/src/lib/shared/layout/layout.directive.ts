@@ -1,66 +1,58 @@
 import {Directive, ElementRef, HostListener, Inject, Input, OnInit, Renderer2} from '@angular/core';
 import {DOCUMENT} from '@angular/common';
 
-import { asideMenuCssClasses, sidebarCssClasses } from '../classes';
+import { asideMenuCssClasses } from '../classes';
 import { ClassToggler } from '../toggle-classes';
+import { SidebarService } from '../../sidebar/sidebar.service';
 
 /**
 * Allows the sidebar to be toggled via click.
 */
 @Directive({
-  selector: '[cuiSidebarToggler]',
+  selector: '[cuiSidebarToggle]',
   providers: [ClassToggler]
 })
-export class SidebarToggleDirective implements OnInit {
-  @Input('cuiSidebarToggler') breakpoint: string;
-  public bp;
-  constructor(private classToggler: ClassToggler) {}
-  ngOnInit(): void {
-    this.bp = this.breakpoint;
-  }
+export class SidebarToggleDirective {
+  @Input('cuiSidebarToggle') breakpoint: string;
+  constructor(
+    private sidebarService: SidebarService
+  ) {}
   @HostListener('click', ['$event'])
   toggleOpen($event: any) {
     $event.preventDefault();
-    const cssClass = this.bp ? `sidebar-${this.bp}-show` : sidebarCssClasses[0];
-    this.classToggler.toggleClasses(cssClass, sidebarCssClasses);
+    const bp = this.breakpoint;
+    this.sidebarService.toggle({ open: undefined, breakpoint: bp });
   }
 }
 
 @Directive({
-  selector: '[cuiSidebarMinimizer]'
+  selector: '[cuiSidebarMinimize]'
 })
 export class SidebarMinimizeDirective {
+
   constructor(
-    @Inject(DOCUMENT) private document: any,
-    private renderer: Renderer2,
+    private sidebarService: SidebarService
   ) { }
 
   @HostListener('click', ['$event'])
-  toggleOpen($event: any) {
+  toggleMinimize($event: any) {
     $event.preventDefault();
-    const body = this.document.body;
-    body.classList.contains('sidebar-minimized') ?
-      this.renderer.removeClass(body, 'sidebar-minimized') :
-      this.renderer.addClass(body, 'sidebar-minimized');
+    this.sidebarService.toggle({ minimize: undefined });
   }
 }
 
 @Directive({
-  selector: '[cuiMobileSidebarToggler]'
+  selector: '[cuiMobileSidebarToggle]'
 })
 export class MobileSidebarToggleDirective {
   constructor(
-    @Inject(DOCUMENT) private document: any,
-    private renderer: Renderer2,
+    private sidebarService: SidebarService
   ) { }
 
   @HostListener('click', ['$event'])
   toggleOpen($event: any) {
     $event.preventDefault();
-    const body = this.document.body;
-    body.classList.contains('sidebar-show') ?
-      this.renderer.removeClass(body, 'sidebar-show') :
-      this.renderer.addClass(body, 'sidebar-show');
+    this.sidebarService.toggle({open: undefined, breakpoint: ''});
   }
 }
 
@@ -77,7 +69,7 @@ export class SidebarOffCanvasCloseDirective {
   ) { }
 
   @HostListener('click', ['$event'])
-  toggleOpen($event: any) {
+  toggle($event: any) {
     $event.preventDefault();
 
     const body = this.document.body;
@@ -90,7 +82,7 @@ export class SidebarOffCanvasCloseDirective {
 }
 
 @Directive({
-  selector: '[cuiBrandMinimizer]'
+  selector: '[cuiBrandMinimize]'
 })
 export class BrandMinimizeDirective {
   constructor(
@@ -113,11 +105,11 @@ export class BrandMinimizeDirective {
 * Allows the aside to be toggled via click.
 */
 @Directive({
-  selector: '[cuiAsideMenuToggler]',
+  selector: '[cuiAsideMenuToggle]',
   providers: [ClassToggler]
 })
 export class AsideToggleDirective implements OnInit {
-  @Input('cuiAsideMenuToggler') breakpoint: string;
+  @Input('cuiAsideMenuToggle') breakpoint: string;
   public bp;
   constructor(private classToggler: ClassToggler) {}
   ngOnInit(): void {

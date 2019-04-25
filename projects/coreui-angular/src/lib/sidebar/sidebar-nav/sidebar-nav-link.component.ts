@@ -1,6 +1,7 @@
 import {Component, Inject, Input, OnInit, Renderer2} from '@angular/core';
 import {DOCUMENT} from '@angular/common';
 import {SidebarNavHelper} from '../sidebar-nav.service';
+import {SidebarService} from '../sidebar.service';
 
 @Component({
   selector: 'cui-sidebar-nav-link',
@@ -15,7 +16,8 @@ export class SidebarNavLinkComponent implements OnInit {
   constructor(
     @Inject(DOCUMENT) private document: any,
     private renderer: Renderer2,
-    public helper: SidebarNavHelper
+    public helper: SidebarNavHelper,
+    private sidebarService: SidebarService
   ) { }
 
   ngOnInit() {
@@ -54,8 +56,6 @@ export class SidebarNavLinkComponent implements OnInit {
   }
 
   public hideMobile() {
-    if (this.document.body.classList.contains('sidebar-show')) {
-      this.renderer.removeClass(this.document.body, 'sidebar-show');
-    }
+    this.sidebarService.toggle({open: false, breakpoint: ''});
   }
 }

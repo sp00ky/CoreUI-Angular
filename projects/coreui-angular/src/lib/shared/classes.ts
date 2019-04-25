@@ -13,3 +13,9 @@ export const asideMenuCssClasses: Array<string> = [
   'aside-menu-lg-show',
   'aside-menu-xl-show'
 ];
+
+export const validBreakpoints: Array<string> = [ 'sm', 'md', 'lg', 'xl' ];
+
+export function checkBreakpoint (breakpoint: string, list: Array<string>): boolean {
+  return list.indexOf(breakpoint) > -1;
+}

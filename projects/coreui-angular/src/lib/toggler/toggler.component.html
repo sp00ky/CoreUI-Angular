@@ -1,0 +1,8 @@
+<div #content *ngIf = "hasContent">
+  <ng-content></ng-content>
+</div>
+<ng-template [ngIf] = "!hasContent">
+  <button class="navbar-toggler" type="button">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+</ng-template>

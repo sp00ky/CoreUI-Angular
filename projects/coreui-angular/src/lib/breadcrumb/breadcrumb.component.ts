@@ -1,4 +1,4 @@
-import {Component, ElementRef, Inject, Input, OnDestroy, OnInit, Renderer2} from '@angular/core';
+import {Component, Inject, Input, OnDestroy, OnInit, Renderer2} from '@angular/core';
 import {DOCUMENT} from '@angular/common';
 
 import {BreadcrumbService} from './breadcrumb.service';

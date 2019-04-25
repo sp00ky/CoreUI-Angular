@@ -9,6 +9,8 @@ import { SidebarFooterComponent } from './sidebar-footer.component';
 import { SidebarFormComponent } from './sidebar-form.component';
 import { SidebarHeaderComponent } from './sidebar-header.component';
 import { SidebarMinimizerComponent } from './sidebar-minimizer.component';
+import { SidebarService } from './sidebar.service';
+
 // CoreUI SidebarNav Component
 import { NavDropdownDirective, NavDropdownToggleDirective } from './sidebar-nav.directive';
 import { SidebarNavComponent } from './sidebar-nav.component';
@@ -47,7 +49,6 @@ import { SidebarNavLabelComponent } from './sidebar-nav/sidebar-nav-label.compon
     SidebarFormComponent,
     SidebarHeaderComponent,
     SidebarMinimizerComponent,
-    SidebarMinimizerComponent,
     SidebarComponent,
     SidebarNavItemsComponent,
     SidebarNavComponent,
@@ -60,6 +61,7 @@ import { SidebarNavLabelComponent } from './sidebar-nav/sidebar-nav-label.compon
     SidebarNavLabelComponent
   ],
   providers: [
+    SidebarService,
     SidebarNavHelper
   ]
 })

@@ -5,8 +5,7 @@ import { asideMenuCssClasses } from '../shared';
 
 @Component({
   selector: 'cui-aside',
-  templateUrl: './aside.component.html',
-  styleUrls: ['./aside.component.scss']
+  templateUrl: './aside.component.html'
 })
 export class AsideComponent implements OnInit, OnDestroy {
   @Input() display: any;
