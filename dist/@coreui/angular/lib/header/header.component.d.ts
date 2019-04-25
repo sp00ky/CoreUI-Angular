@@ -4,17 +4,7 @@ export declare class HeaderComponent implements OnInit, OnDestroy {
     private renderer;
     private hostElement;
     fixed: boolean;
-    navbarBrand: any;
-    navbarBrandFull: any;
-    navbarBrandMinimized: any;
-    navbarBrandText: any;
-    navbarBrandRouterLink: any[] | string;
-    sidebarToggler: string | boolean;
-    mobileSidebarToggler: boolean;
-    asideMenuToggler: string | boolean;
-    mobileAsideMenuToggler: boolean;
     private readonly fixedClass;
-    navbarBrandImg: boolean;
     constructor(document: any, renderer: Renderer2, hostElement: ElementRef);
     ngOnInit(): void;
     ngOnDestroy(): void;

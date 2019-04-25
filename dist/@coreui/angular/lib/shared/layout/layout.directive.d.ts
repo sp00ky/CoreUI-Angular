@@ -1,26 +1,23 @@
 import { ElementRef, OnInit, Renderer2 } from '@angular/core';
 import { ClassToggler } from '../toggle-classes';
+import { SidebarService } from '../../sidebar/sidebar.service';
 /**
 * Allows the sidebar to be toggled via click.
 */
-export declare class SidebarToggleDirective implements OnInit {
-    private classToggler;
+export declare class SidebarToggleDirective {
+    private sidebarService;
     breakpoint: string;
-    bp: any;
-    constructor(classToggler: ClassToggler);
-    ngOnInit(): void;
+    constructor(sidebarService: SidebarService);
     toggleOpen($event: any): void;
 }
 export declare class SidebarMinimizeDirective {
-    private document;
-    private renderer;
-    constructor(document: any, renderer: Renderer2);
-    toggleOpen($event: any): void;
+    private sidebarService;
+    constructor(sidebarService: SidebarService);
+    toggleMinimize($event: any): void;
 }
 export declare class MobileSidebarToggleDirective {
-    private document;
-    private renderer;
-    constructor(document: any, renderer: Renderer2);
+    private sidebarService;
+    constructor(sidebarService: SidebarService);
     toggleOpen($event: any): void;
 }
 /**
@@ -30,7 +27,7 @@ export declare class SidebarOffCanvasCloseDirective {
     private document;
     private renderer;
     constructor(document: any, renderer: Renderer2);
-    toggleOpen($event: any): void;
+    toggle($event: any): void;
 }
 export declare class BrandMinimizeDirective {
     private document;
