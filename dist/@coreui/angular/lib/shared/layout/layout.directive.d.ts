@@ -1,6 +1,7 @@
 import { ElementRef, OnInit, Renderer2 } from '@angular/core';
 import { ClassToggler } from '../toggle-classes';
 import { SidebarService } from '../../sidebar/sidebar.service';
+import { OutClickService } from '../../sidebar/out-click.service';
 /**
 * Allows the sidebar to be toggled via click.
 */
@@ -57,4 +58,13 @@ export declare class HtmlAttributesDirective implements OnInit {
     private setStyle;
     private addClass;
     private setAttrib;
+}
+/**
+ * Detects click outside the element
+ */
+export declare class OutClickDirective {
+    private elementRef;
+    private outClickService;
+    constructor(elementRef: ElementRef, outClickService: OutClickService);
+    onDocumentClick($event: MouseEvent): void;
 }

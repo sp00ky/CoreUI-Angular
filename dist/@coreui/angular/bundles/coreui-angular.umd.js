@@ -136,6 +136,37 @@
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
+    var OutClickService = /** @class */ (function () {
+        function OutClickService() {
+            this.outClick = new rxjs.BehaviorSubject({ event: undefined });
+            this.outClick$ = this.outClick.asObservable();
+        }
+        /**
+         * @param {?} message
+         * @return {?}
+         */
+        OutClickService.prototype.onClick = /**
+         * @param {?} message
+         * @return {?}
+         */
+        function (message) {
+            this.outClick.next(message);
+        };
+        OutClickService.decorators = [
+            { type: core.Injectable, args: [{
+                        providedIn: 'root'
+                    },] }
+        ];
+        /** @nocollapse */
+        OutClickService.ctorParameters = function () { return []; };
+        /** @nocollapse */ OutClickService.ngInjectableDef = core.defineInjectable({ factory: function OutClickService_Factory() { return new OutClickService(); }, token: OutClickService, providedIn: "root" });
+        return OutClickService;
+    }());
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
     /**
      * Allows the sidebar to be toggled via click.
      */
@@ -453,6 +484,43 @@
         };
         return HtmlAttributesDirective;
     }());
+    /**
+     * Detects click outside the element
+     */
+    var OutClickDirective = /** @class */ (function () {
+        function OutClickDirective(elementRef, outClickService) {
+            this.elementRef = elementRef;
+            this.outClickService = outClickService;
+        }
+        /**
+         * @param {?} $event
+         * @return {?}
+         */
+        OutClickDirective.prototype.onDocumentClick = /**
+         * @param {?} $event
+         * @return {?}
+         */
+        function ($event) {
+            /** @type {?} */
+            var targetElement = (/** @type {?} */ ($event.target));
+            // Check if the click was outside the element
+            if (targetElement && !this.elementRef.nativeElement.contains(targetElement)) {
+                this.outClickService.onClick({ event: $event });
+            }
+        };
+        OutClickDirective.decorators = [
+            { type: core.Directive, args: [{ selector: '[cuiOutClick]' },] }
+        ];
+        /** @nocollapse */
+        OutClickDirective.ctorParameters = function () { return [
+            { type: core.ElementRef },
+            { type: OutClickService }
+        ]; };
+        OutClickDirective.propDecorators = {
+            onDocumentClick: [{ type: core.HostListener, args: ['document:click', ['$event'],] }]
+        };
+        return OutClickDirective;
+    }());
 
     /**
      * @fileoverview added by tsickle
@@ -473,7 +541,8 @@
                             SidebarToggleDirective,
                             SidebarMinimizeDirective,
                             SidebarOffCanvasCloseDirective,
-                            HtmlAttributesDirective
+                            HtmlAttributesDirective,
+                            OutClickDirective
                         ],
                         declarations: [
                             AsideToggleDirective,
@@ -482,7 +551,8 @@
                             SidebarToggleDirective,
                             SidebarMinimizeDirective,
                             SidebarOffCanvasCloseDirective,
-                            HtmlAttributesDirective
+                            HtmlAttributesDirective,
+                            OutClickDirective
                         ],
                         providers: [
                             ClassToggler
@@ -1071,12 +1141,13 @@
      * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var SidebarComponent = /** @class */ (function () {
-        function SidebarComponent(document, renderer, hostElement, classToggler, sidebarService) {
+        function SidebarComponent(document, renderer, hostElement, classToggler, sidebarService, outClickService) {
             this.document = document;
             this.renderer = renderer;
             this.hostElement = hostElement;
             this.classToggler = classToggler;
             this.sidebarService = sidebarService;
+            this.outClickService = outClickService;
             this.state = {
                 minimized: undefined,
                 opened: undefined,
@@ -1091,7 +1162,6 @@
          * @return {?}
          */
         function () {
-            var _this = this;
             this.body = this.document.body;
             this.displayBreakpoint(this.display);
             this.isCompact(this.compact);
@@ -1100,18 +1170,8 @@
             this.isOffCanvas(this.offCanvas);
             this.isOpened(this.opened);
             this.setState();
-            this.subscription = this.sidebarService.sidebarState$.subscribe((/**
-             * @param {?} state
-             * @return {?}
-             */
-            function (state) {
-                if ('minimize' in state) {
-                    _this.minimize(state.minimize);
-                }
-                if ('open' in state) {
-                    _this.open(state);
-                }
-            }));
+            this.stateToggleSubscribe();
+            this.outClickSubscribe();
         };
         /**
          * @return {?}
@@ -1121,7 +1181,8 @@
          */
         function () {
             this.renderer.removeClass(this.body, 'sidebar-fixed');
-            this.subscription.unsubscribe();
+            this.stateToggleSubscribe(false);
+            this.outClickSubscribe(false);
         };
         /**
          * @param {?=} compact
@@ -1200,9 +1261,7 @@
         function (display) {
             if (display === void 0) { display = this.display; }
             if (display !== false) {
-                /** @type {?} */
-                var cssClass = Boolean(display) && checkBreakpoint(display, validBreakpoints) ? "sidebar-" + display + "-show" : sidebarCssClasses[0];
-                this.renderer.addClass(this.body, cssClass);
+                this.sidebarService.toggle({ open: true, breakpoint: display });
             }
         };
         /**
@@ -1246,6 +1305,8 @@
                 "sidebar-" + state.breakpoint + "-show" :
                 sidebarCssClasses[0];
             /** @type {?} */
+            var mobile = cssClass === sidebarCssClasses[0];
+            /** @type {?} */
             var opened = this.body.classList.contains(cssClass);
             /** @type {?} */
             var open = toggle ? !opened : state.open;
@@ -1255,8 +1316,90 @@
             else {
                 this.renderer.removeClass(this.body, cssClass);
             }
+            if (mobile) {
+                if (open && (!this.outClickSubscription || this.outClickSubscription.closed)) {
+                    this.outClickSubscribe();
+                }
+                if (!open && this.outClickSubscription && !this.outClickSubscription.closed) {
+                    this.outClickSubscribe(false);
+                }
+            }
             this.state.opened = (/** @type {?} */ (open));
             return (/** @type {?} */ (open));
+        };
+        /**
+         * @private
+         * @param {?=} subscribe
+         * @return {?}
+         */
+        SidebarComponent.prototype.stateToggleSubscribe = /**
+         * @private
+         * @param {?=} subscribe
+         * @return {?}
+         */
+        function (subscribe) {
+            var _this = this;
+            if (subscribe === void 0) { subscribe = true; }
+            if (subscribe) {
+                this.stateToggleSubscription = this.sidebarService.sidebarState$.subscribe((/**
+                 * @param {?} state
+                 * @return {?}
+                 */
+                function (state) {
+                    if ('minimize' in state) {
+                        _this.minimize(state.minimize);
+                    }
+                    if ('open' in state) {
+                        _this.open(state);
+                    }
+                }));
+            }
+            else {
+                this.stateToggleSubscription.unsubscribe();
+            }
+        };
+        /**
+         * @private
+         * @param {?=} subscribe
+         * @return {?}
+         */
+        SidebarComponent.prototype.outClickSubscribe = /**
+         * @private
+         * @param {?=} subscribe
+         * @return {?}
+         */
+        function (subscribe) {
+            var _this = this;
+            if (subscribe === void 0) { subscribe = true; }
+            if (subscribe) {
+                this.outClickSubscription = this.outClickService.outClick$.subscribe((/**
+                 * @param {?} message
+                 * @return {?}
+                 */
+                function (message) {
+                    if (message.event) {
+                        _this.hideMobile(message.event);
+                    }
+                }));
+            }
+            else {
+                this.outClickSubscription.unsubscribe();
+            }
+        };
+        /**
+         * @param {?} e
+         * @return {?}
+         */
+        SidebarComponent.prototype.hideMobile = /**
+         * @param {?} e
+         * @return {?}
+         */
+        function (e) {
+            if (this.state.opened) {
+                if (!e.target.closest('[cuisidebartoggle]')) {
+                    this.sidebarService.toggle({ open: false, breakpoint: '' });
+                }
+            }
         };
         SidebarComponent.decorators = [
             { type: core.Component, args: [{
@@ -1270,7 +1413,8 @@
             { type: core.Renderer2 },
             { type: core.ElementRef },
             { type: ClassToggler },
-            { type: SidebarService }
+            { type: SidebarService },
+            { type: OutClickService }
         ]; };
         SidebarComponent.propDecorators = {
             compact: [{ type: core.Input }],
@@ -2032,7 +2176,7 @@
                         imports: [
                             common.CommonModule,
                             router.RouterModule,
-                            LayoutModule
+                            LayoutModule,
                         ],
                         exports: [
                             SidebarFooterComponent,
@@ -2067,6 +2211,7 @@
                             SidebarNavLabelComponent
                         ],
                         providers: [
+                            OutClickService,
                             SidebarService,
                             SidebarNavHelper
                         ]
