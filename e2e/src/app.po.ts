@@ -6,6 +6,6 @@ export class AppPage {
   }
 
   getParagraphText() {
-    return element(by.css('app-root h1')).getText();
+    return element(by.tagName('cui-footer')).element(by.tagName('span')).getText();
   }
 }
