@@ -1,9 +1,10 @@
-import {Directive, ElementRef, HostListener, Inject, Input, OnInit, Renderer2} from '@angular/core';
+import {Directive, ElementRef, EventEmitter, HostListener, Inject, Input, OnInit, Output, Renderer2} from '@angular/core';
 import {DOCUMENT} from '@angular/common';
 
 import { asideMenuCssClasses } from '../classes';
 import { ClassToggler } from '../toggle-classes';
 import { SidebarService } from '../../sidebar/sidebar.service';
+import { OutClickService } from '../../sidebar/out-click.service';
 
 /**
 * Allows the sidebar to be toggled via click.
@@ -162,5 +163,27 @@ export class HtmlAttributesDirective implements OnInit {
 
   private setAttrib(key, value) {
     this.renderer.setAttribute(this.el.nativeElement, key, value );
+  }
+}
+
+/**
+ * Detects click outside the element
+ */
+@Directive({ selector: '[cuiOutClick]' })
+export class OutClickDirective {
+
+  constructor(
+    private elementRef: ElementRef,
+    private outClickService: OutClickService
+  ) {}
+
+  @HostListener('document:click', ['$event'])
+  public onDocumentClick($event: MouseEvent): void {
+    const targetElement = $event.target as HTMLElement;
+
+    // Check if the click was outside the element
+    if (targetElement && !this.elementRef.nativeElement.contains(targetElement)) {
+      this.outClickService.onClick({event: $event});
+    }
   }
 }

@@ -3,6 +3,7 @@ import { NgModule} from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { LayoutModule } from '../shared/layout/layout.module';
+
 // CoreUI Sidebar Component
 import { SidebarComponent } from './sidebar.component';
 import { SidebarFooterComponent } from './sidebar-footer.component';
@@ -10,6 +11,7 @@ import { SidebarFormComponent } from './sidebar-form.component';
 import { SidebarHeaderComponent } from './sidebar-header.component';
 import { SidebarMinimizerComponent } from './sidebar-minimizer.component';
 import { SidebarService } from './sidebar.service';
+import { OutClickService } from './out-click.service';
 
 // CoreUI SidebarNav Component
 import { NavDropdownDirective, NavDropdownToggleDirective } from './sidebar-nav.directive';
@@ -26,7 +28,7 @@ import { SidebarNavLabelComponent } from './sidebar-nav/sidebar-nav-label.compon
   imports: [
     CommonModule,
     RouterModule,
-    LayoutModule
+    LayoutModule,
   ],
   exports: [
     SidebarFooterComponent,
@@ -61,6 +63,7 @@ import { SidebarNavLabelComponent } from './sidebar-nav/sidebar-nav-label.compon
     SidebarNavLabelComponent
   ],
   providers: [
+    OutClickService,
     SidebarService,
     SidebarNavHelper
   ]

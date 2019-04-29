@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { sidebarCssClasses, validBreakpoints, checkBreakpoint } from '../shared';
 import { ClassToggler } from '../shared/toggle-classes';
 import { SidebarService } from './sidebar.service';
+import { OutClickService } from './out-click.service';
 
 interface SidebarState {
   minimized: boolean;
@@ -14,7 +15,7 @@ interface SidebarState {
 
 @Component({
   selector: 'cui-sidebar',
-  template: `<ng-content></ng-content>`,
+  template: `<ng-content></ng-content>`
 })
 export class SidebarComponent implements OnInit, OnDestroy {
   @Input() compact: boolean;
@@ -24,7 +25,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
   @Input() opened: boolean;
   @Input() offCanvas: boolean;
 
-  private subscription: Subscription;
+  private stateToggleSubscription: Subscription;
+  private outClickSubscription: Subscription;
   private body: HTMLBodyElement;
 
   state: SidebarState = {
@@ -38,7 +40,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
     private renderer: Renderer2,
     private hostElement: ElementRef,
     private classToggler: ClassToggler,
-    private sidebarService: SidebarService
+    private sidebarService: SidebarService,
+    private outClickService: OutClickService
   ) {
     renderer.addClass(hostElement.nativeElement, 'sidebar');
   }
@@ -54,20 +57,15 @@ export class SidebarComponent implements OnInit, OnDestroy {
     this.isOpened(this.opened);
     this.setState();
 
-    this.subscription = this.sidebarService.sidebarState$.subscribe((state) => {
-      if ('minimize' in state) {
-        this.minimize(state.minimize);
-      }
-      if ('open' in state) {
-        this.open(state);
-      }
-    });
+    this.stateToggleSubscribe();
+    this.outClickSubscribe();
   }
 
   ngOnDestroy(): void {
     this.renderer.removeClass(this.body, 'sidebar-fixed' );
 
-    this.subscription.unsubscribe();
+    this.stateToggleSubscribe(false);
+    this.outClickSubscribe(false);
   }
 
   isCompact(compact: boolean = this.compact): void {
@@ -98,8 +96,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   displayBreakpoint(display: any = this.display): void {
     if (display !== false) {
-      const cssClass = Boolean(display) && checkBreakpoint(display, validBreakpoints) ? `sidebar-${display}-show` : sidebarCssClasses[0];
-      this.renderer.addClass(this.body, cssClass);
+      this.sidebarService.toggle({open: true, breakpoint: display});
     }
   }
 
@@ -120,6 +117,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
     const cssClass = Boolean(state.breakpoint) && checkBreakpoint(state.breakpoint, validBreakpoints) ?
         `sidebar-${state.breakpoint}-show` :
         sidebarCssClasses[0];
+    const mobile = cssClass === sidebarCssClasses[0];
     const opened = this.body.classList.contains( cssClass );
     const open = toggle ? !opened : state.open;
     if (open) {
@@ -127,7 +125,50 @@ export class SidebarComponent implements OnInit, OnDestroy {
     } else {
       this.renderer.removeClass(this.body, cssClass );
     }
+    if (mobile) {
+      if (open && (!this.outClickSubscription || this.outClickSubscription.closed)) {
+        this.outClickSubscribe();
+      }
+      if (!open && this.outClickSubscription && !this.outClickSubscription.closed) {
+        this.outClickSubscribe(false);
+      }
+    }
     this.state.opened = <boolean>open;
     return <boolean>open;
+  }
+
+  private stateToggleSubscribe(subscribe: Boolean = true) {
+    if (subscribe) {
+      this.stateToggleSubscription = this.sidebarService.sidebarState$.subscribe((state) => {
+        if ('minimize' in state) {
+          this.minimize(state.minimize);
+        }
+        if ('open' in state) {
+          this.open(state);
+        }
+      });
+    } else {
+      this.stateToggleSubscription.unsubscribe();
+    }
+  }
+
+  private outClickSubscribe(subscribe: Boolean = true) {
+    if (subscribe) {
+      this.outClickSubscription = this.outClickService.outClick$.subscribe(message => {
+        if (message.event) {
+          this.hideMobile(message.event);
+        }
+      });
+    } else {
+      this.outClickSubscription.unsubscribe();
+    }
+  }
+
+  public hideMobile(e) {
+    if (this.state.opened) {
+      if (!e.target.closest('[cuisidebartoggle]')) {
+        this.sidebarService.toggle({open: false, breakpoint: ''});
+      }
+    }
   }
 }

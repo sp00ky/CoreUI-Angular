@@ -7,7 +7,8 @@ import {
   SidebarToggleDirective,
   SidebarMinimizeDirective,
   SidebarOffCanvasCloseDirective,
-  HtmlAttributesDirective
+  HtmlAttributesDirective,
+  OutClickDirective
 } from './layout.directive';
 import { ClassToggler } from '../toggle-classes';
 
@@ -22,7 +23,8 @@ import { ClassToggler } from '../toggle-classes';
     SidebarToggleDirective,
     SidebarMinimizeDirective,
     SidebarOffCanvasCloseDirective,
-    HtmlAttributesDirective
+    HtmlAttributesDirective,
+    OutClickDirective
   ],
   declarations: [
     AsideToggleDirective,
@@ -31,7 +33,8 @@ import { ClassToggler } from '../toggle-classes';
     SidebarToggleDirective,
     SidebarMinimizeDirective,
     SidebarOffCanvasCloseDirective,
-    HtmlAttributesDirective
+    HtmlAttributesDirective,
+    OutClickDirective
   ],
   providers: [
     ClassToggler
