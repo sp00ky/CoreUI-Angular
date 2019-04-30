@@ -1,17 +1,17 @@
-<a class="navbar-brand" [routerLink]="navbarBrandRouterLink">
+<a class="c-header-brand" [routerLink]="navbarBrandRouterLink">
   <ng-template [ngIf]="navbarBrandImg">
     <img *ngIf="navbarBrand"
          [cuiHtmlAttr]="navbarBrand"
-         [ngClass]="'navbar-brand'">
+         [ngClass]="'c-header-brand'">
     <img *ngIf="navbarBrandFull"
          [cuiHtmlAttr]="navbarBrandFull"
-         [ngClass]="'navbar-brand-full'">
+         [ngClass]="'c-header-brand-full'">
     <img *ngIf="navbarBrandMinimized"
          [cuiHtmlAttr]="navbarBrandMinimized"
-         [ngClass]="'navbar-brand-minimized'">
+         [ngClass]="'c-header-brand-minimized'">
   </ng-template>
   <ng-template [ngIf]="!navbarBrandImg">
-    <div class="navbar-brand-full" [innerHTML]="navbarBrandText.text"></div>
-    <div class="navbar-brand-minimized" [innerHTML]="navbarBrandText.icon"></div>
+    <div class="c-header-brand-full" [innerHTML]="navbarBrandText.text"></div>
+    <div class="c-header-brand-minimized" [innerHTML]="navbarBrandText.icon"></div>
   </ng-template>
 </a>

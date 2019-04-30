@@ -40,10 +40,11 @@ export declare class BrandMinimizeDirective {
 * Allows the aside to be toggled via click.
 */
 export declare class AsideToggleDirective implements OnInit {
+    private elementRef;
     private classToggler;
     breakpoint: string;
     bp: any;
-    constructor(classToggler: ClassToggler);
+    constructor(elementRef: ElementRef, classToggler: ClassToggler);
     ngOnInit(): void;
     toggleOpen($event: any): void;
 }

@@ -1,9 +1,9 @@
 export const sidebarCssClasses: Array<string> = [
-  'sidebar-show',
-  'sidebar-sm-show',
-  'sidebar-md-show',
-  'sidebar-lg-show',
-  'sidebar-xl-show'
+  'c-sidebar-show',
+  'c-sidebar-sm-show',
+  'c-sidebar-md-show',
+  'c-sidebar-lg-show',
+  'c-sidebar-xl-show'
 ];
 
 export const asideMenuCssClasses: Array<string> = [

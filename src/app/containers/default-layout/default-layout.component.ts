@@ -10,24 +10,24 @@ import { navItems } from '../../_nav';
 export class DefaultLayoutComponent implements OnDestroy, OnInit {
   public navItems = navItems;
   public sidebarMinimized = true;
-  private changes: MutationObserver;
-  public element: HTMLBodyElement;
+  private observer: MutationObserver;
+  public element: HTMLElement;
 
-  constructor(@Inject(DOCUMENT) _document?: any) {
+  constructor(@Inject(DOCUMENT) document?: any) {}
 
-    this.changes = new MutationObserver((mutations) => {
-      this.sidebarMinimized = _document.body.classList.contains('sidebar-minimized');
+  ngOnInit(): void {
+    this.element = document.getElementById('sidebar');
+    console.log(this.element);
+    this.observer = new MutationObserver((mutations) => {
+      this.sidebarMinimized = this.element.classList.contains('c-sidebar-minimized');
     });
-    this.element = _document.body;
-    this.changes.observe(<Element>this.element, {
+    this.observer.observe(<Element>this.element, {
       attributes: true,
       attributeFilter: ['class']
     });
   }
 
-  ngOnInit(): void {}
-
   ngOnDestroy(): void {
-    this.changes.disconnect();
+    this.observer.disconnect();
   }
 }

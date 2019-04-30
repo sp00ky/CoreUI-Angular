@@ -43,7 +43,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
     private sidebarService: SidebarService,
     private outClickService: OutClickService
   ) {
-    renderer.addClass(hostElement.nativeElement, 'sidebar');
+    renderer.addClass(hostElement.nativeElement, 'c-sidebar');
   }
 
   ngOnInit(): void {
@@ -62,7 +62,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.renderer.removeClass(this.body, 'sidebar-fixed' );
+    this.renderer.removeClass(this.hostElement.nativeElement, 'c-sidebar-fixed' );
 
     this.stateToggleSubscribe(false);
     this.outClickSubscribe(false);
@@ -70,13 +70,13 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   isCompact(compact: boolean = this.compact): void {
     if (compact) {
-      this.renderer.addClass(this.body, 'sidebar-compact' );
+      this.renderer.addClass(this.hostElement.nativeElement, 'c-sidebar-compact' );
     }
   }
 
   isFixed(fixed: boolean = this.fixed): void {
     if (fixed) {
-      this.renderer.addClass(this.body, 'sidebar-fixed');
+      this.renderer.addClass(this.hostElement.nativeElement, 'c-sidebar-fixed');
     }
   }
 
@@ -86,7 +86,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   isOffCanvas(offCanvas: boolean = this.offCanvas): void {
     if (offCanvas) {
-      this.renderer.addClass(this.body, 'sidebar-off-canvas');
+      this.renderer.addClass(this.hostElement.nativeElement, 'c-sidebar-off-canvas');
     }
   }
 
@@ -101,13 +101,14 @@ export class SidebarComponent implements OnInit, OnDestroy {
   }
 
   setState() {
-    this.state.minimized = this.body.classList.contains('sidebar-minimized');
-    this.state.opened = this.body.classList.contains( `sidebar-${this.display}-show` );
+    this.state.minimized = this.hostElement.nativeElement.classList.contains('c-sidebar-minimized');
+    this.state.opened = this.hostElement.nativeElement.classList.contains( `c-sidebar-${this.display}-show` );
   }
 
   minimize(force?: boolean): boolean {
-    const minimize = (typeof force === 'undefined') ? !this.body.classList.contains('sidebar-minimized') : force;
-    minimize ? this.renderer.addClass(this.body, 'sidebar-minimized') : this.renderer.removeClass(this.body, 'sidebar-minimized');
+    const minimize = (typeof force === 'undefined') ? !this.hostElement.nativeElement.classList.contains('c-sidebar-minimized') : force;
+    minimize ? this.renderer.addClass(this.hostElement.nativeElement, 'c-sidebar-minimized') :
+      this.renderer.removeClass(this.hostElement.nativeElement, 'c-sidebar-minimized');
     this.state.minimized = minimize;
     return minimize;
   }
@@ -115,15 +116,15 @@ export class SidebarComponent implements OnInit, OnDestroy {
   open(state: any): boolean {
     const toggle = (typeof state.open === 'undefined');
     const cssClass = Boolean(state.breakpoint) && checkBreakpoint(state.breakpoint, validBreakpoints) ?
-        `sidebar-${state.breakpoint}-show` :
+        `c-sidebar-${state.breakpoint}-show` :
         sidebarCssClasses[0];
     const mobile = cssClass === sidebarCssClasses[0];
-    const opened = this.body.classList.contains( cssClass );
+    const opened = this.hostElement.nativeElement.classList.contains( cssClass );
     const open = toggle ? !opened : state.open;
     if (open) {
-      this.renderer.addClass(this.body, cssClass );
+      this.renderer.addClass(this.hostElement.nativeElement, cssClass );
     } else {
-      this.renderer.removeClass(this.body, cssClass );
+      this.renderer.removeClass(this.hostElement.nativeElement, cssClass );
     }
     if (mobile) {
       if (open && (!this.outClickSubscription || this.outClickSubscription.closed)) {

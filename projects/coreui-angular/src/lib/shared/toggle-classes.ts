@@ -8,24 +8,24 @@ export class ClassToggler {
 
   constructor(
     @Inject(DOCUMENT) private document: any,
-    private rendererFactory: RendererFactory2
+    private rendererFactory: RendererFactory2,
   ) {
     this.renderer = rendererFactory.createRenderer(null, null);
   }
 
-  removeClasses(NewClassNames) {
-    const MatchClasses = NewClassNames.map((Class) => this.document.body.classList.contains(Class));
+  removeClasses(NewClassNames, element) {
+    const MatchClasses = NewClassNames.map((Class) => element.classList.contains(Class));
     return MatchClasses.indexOf(true) !== -1;
   }
 
-  toggleClasses(Toggle, ClassNames) {
+  toggleClasses(Toggle, ClassNames, element) {
     const Level = ClassNames.indexOf(Toggle);
     const NewClassNames = ClassNames.slice(0, Level + 1);
 
-    if (this.removeClasses(NewClassNames)) {
-      NewClassNames.map((Class) => this.renderer.removeClass(this.document.body, Class));
+    if (this.removeClasses(NewClassNames, element)) {
+      NewClassNames.map((Class) => this.renderer.removeClass(element, Class));
     } else {
-      this.renderer.addClass(this.document.body, Toggle);
+      this.renderer.addClass(element, Toggle);
     }
   }
 }

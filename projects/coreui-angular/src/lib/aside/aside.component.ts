@@ -12,14 +12,14 @@ export class AsideComponent implements OnInit, OnDestroy {
   @Input() fixed: boolean;
   @Input() offCanvas: boolean;
 
-  private readonly fixedClass = 'aside-menu-fixed';
+  private readonly fixedClass = 'c-sidebar-fixed';
 
   constructor(
     @Inject(DOCUMENT) private document: any,
     private renderer: Renderer2,
     private hostElement: ElementRef
   ) {
-    renderer.addClass(hostElement.nativeElement, 'aside-menu');
+    renderer.addClass(hostElement.nativeElement, 'c-sidebar-right');
   }
 
   ngOnInit(): void {
@@ -29,25 +29,25 @@ export class AsideComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.renderer.removeClass(this.document.body, this.fixedClass);
+    this.renderer.removeClass(this.hostElement.nativeElement, this.fixedClass);
   }
 
   isFixed(fixed: boolean = this.fixed): void {
     if (fixed) {
-      this.renderer.addClass(this.document.body, this.fixedClass);
+      this.renderer.addClass(this.hostElement.nativeElement, this.fixedClass);
     }
   }
 
   isOffCanvas(offCanvas: boolean = this.offCanvas): void {
     if (offCanvas) {
-      this.renderer.addClass(this.document.body, 'aside-menu-off-canvas');
+      this.renderer.addClass(this.hostElement.nativeElement, 'aside-menu-off-canvas');
     }
   }
 
   displayBreakpoint(display: any = this.display): void {
     if (display !== false ) {
-      const cssClass = this.display ? `aside-menu-${this.display}-show` : asideMenuCssClasses[0];
-      this.renderer.addClass(this.document.body, cssClass);
+      const cssClass = this.display ? `c-sidebar-right-${this.display}-show` : asideMenuCssClasses[0];
+      this.renderer.addClass(this.hostElement.nativeElement, cssClass);
     }
   }
 }

@@ -112,15 +112,18 @@ export class BrandMinimizeDirective {
 export class AsideToggleDirective implements OnInit {
   @Input('cuiAsideMenuToggle') breakpoint: string;
   public bp;
-  constructor(private classToggler: ClassToggler) {}
+  constructor(
+    private elementRef: ElementRef,
+    private classToggler: ClassToggler
+  ) {}
   ngOnInit(): void {
     this.bp = this.breakpoint;
   }
   @HostListener('click', ['$event'])
   toggleOpen($event: any) {
     $event.preventDefault();
-    const cssClass = this.bp ? `aside-menu-${this.bp}-show` : asideMenuCssClasses[0];
-    this.classToggler.toggleClasses(cssClass, asideMenuCssClasses);
+    const cssClass = this.bp ? `c-sidebar-${this.bp}-show` : asideMenuCssClasses[0];
+      this.classToggler.toggleClasses(cssClass, asideMenuCssClasses, this.elementRef.nativeElement);
   }
 }
 

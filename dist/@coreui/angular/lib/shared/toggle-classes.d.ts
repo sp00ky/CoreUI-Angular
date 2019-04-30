@@ -4,6 +4,6 @@ export declare class ClassToggler {
     private rendererFactory;
     private renderer;
     constructor(document: any, rendererFactory: RendererFactory2);
-    removeClasses(NewClassNames: any): boolean;
-    toggleClasses(Toggle: any, ClassNames: any): void;
+    removeClasses(NewClassNames: any, element: any): boolean;
+    toggleClasses(Toggle: any, ClassNames: any, element: any): void;
 }

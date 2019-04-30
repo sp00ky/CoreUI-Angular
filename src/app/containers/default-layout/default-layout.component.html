@@ -6,12 +6,12 @@
     [navbarBrandMinimized]="{src: 'assets/img/brand/sygnet.svg', width: 30, height: 30, alt: 'CoreUI Logo'}"
   ></cui-navbar-brand>
   <cui-toggler class="d-md-down-none" cuiSidebarToggle="lg"></cui-toggler>
-  <ul class="nav navbar-nav d-md-down-none mr-auto">
+  <ul class="nav c-header-nav d-md-down-none mr-auto">
     <li class="nav-item px-3">
       <a class="nav-link" href="#">Dashboard</a>
     </li>
   </ul>
-  <ul class="nav navbar-nav ml-auto">
+  <ul class="nav c-header-nav ml-auto">
     <li class="nav-item d-md-down-none">
       <a class="nav-link" href="#"><i class="cui-bell"></i><span class="badge badge-pill badge-danger">5</span></a>
     </li>
@@ -45,31 +45,36 @@
   <cui-toggler class="d-md-down-none" [cuiAsideMenuToggle]="'lg'"></cui-toggler>
   <cui-toggler class="d-lg-none" cuiAsideMenuToggle></cui-toggler>
 </cui-header>
-<div class="app-body">
-  <cui-sidebar [fixed]="true" [display]="'lg'" [opened]="true" cuiOutClick>
+<div class="c-body">
+  <cui-sidebar id="sidebar" [fixed]="true" [display]="'lg'" [opened]="true" cuiOutClick class="c-sidebar-dark">
     <cui-sidebar-nav [navItems]="navItems" [perfectScrollbar] [disabled]="sidebarMinimized"></cui-sidebar-nav>
     <cui-sidebar-minimizer cuiSidebarMinimize cuiBrandMinimize></cui-sidebar-minimizer>
   </cui-sidebar>
   <!-- Main content -->
-  <main class="main">
+  <main class="c-main">
     <!-- Breadcrumb -->
     <cui-breadcrumb></cui-breadcrumb>
     <div class="container-fluid">
       <router-outlet></router-outlet>
     </div><!-- /.container-fluid -->
   </main>
-  <cui-aside [fixed]="true" [display]="false">
-    <cui-toggler cuiSidebarToggle="lg">
-      <button class="navbar-toggler" type="button">
-        <span class="cui-layers align-middle h2"></span>
-      </button>
-    </cui-toggler>
-    <button cuiSidebarMinimize>Sidebar minimizer</button>
-    <br/>
-    <button cuiSidebarToggle="lg">Sidebar toggler</button>
-    <br/>
-    <button cuiSidebarToggle>Sidebar mobile toggler</button>
-  </cui-aside>
+  <cui-sidebar id="aside" [fixed]="true" [display]="'lg'" [opened]="true" cuiOutClick class="c-sidebar-light c-sidebar-right">
+    <cui-sidebar-nav [navItems]="navItems" [perfectScrollbar] [disabled]="sidebarMinimized"></cui-sidebar-nav>
+    <cui-sidebar-minimizer cuiSidebarMinimize cuiBrandMinimize></cui-sidebar-minimizer>
+  </cui-sidebar>
+
+<!--  <cui-aside [fixed]="true" [display]="false" class="c-sidebar-light">-->
+<!--    <cui-toggler cuiSidebarToggle="lg">-->
+<!--      <button class="navbar-toggler" type="button">-->
+<!--        <span class="cui-layers align-middle h2"></span>-->
+<!--      </button>-->
+<!--    </cui-toggler>-->
+<!--    <button cuiSidebarMinimize>Sidebar minimizer</button>-->
+<!--    <br/>-->
+<!--    <button cuiSidebarToggle="lg">Sidebar toggler</button>-->
+<!--    <br/>-->
+<!--    <button cuiSidebarToggle>Sidebar mobile toggler</button>-->
+<!--  </cui-aside>-->
 </div>
 <cui-footer>
   <span><a href="https://coreui.io/pro/angular/">CoreUI</a> &copy; 2019 creativeLabs.</span>

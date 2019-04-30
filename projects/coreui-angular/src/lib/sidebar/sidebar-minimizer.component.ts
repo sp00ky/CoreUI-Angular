@@ -7,6 +7,6 @@ import { Component, HostBinding } from '@angular/core';
 export class SidebarMinimizerComponent {
 
   @HostBinding('attr.role') role = 'button';
-  @HostBinding('class') classes = 'sidebar-minimizer';
+  @HostBinding('class') classes = 'c-sidebar-minimizer';
 
 }

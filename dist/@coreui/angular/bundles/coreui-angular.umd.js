@@ -10,11 +10,11 @@
      */
     /** @type {?} */
     var sidebarCssClasses = [
-        'sidebar-show',
-        'sidebar-sm-show',
-        'sidebar-md-show',
-        'sidebar-lg-show',
-        'sidebar-xl-show'
+        'c-sidebar-show',
+        'c-sidebar-sm-show',
+        'c-sidebar-md-show',
+        'c-sidebar-lg-show',
+        'c-sidebar-xl-show'
     ];
     /** @type {?} */
     var asideMenuCssClasses = [
@@ -47,47 +47,50 @@
         }
         /**
          * @param {?} NewClassNames
+         * @param {?} element
          * @return {?}
          */
         ClassToggler.prototype.removeClasses = /**
          * @param {?} NewClassNames
+         * @param {?} element
          * @return {?}
          */
-        function (NewClassNames) {
-            var _this = this;
+        function (NewClassNames, element) {
             /** @type {?} */
             var MatchClasses = NewClassNames.map((/**
              * @param {?} Class
              * @return {?}
              */
-            function (Class) { return _this.document.body.classList.contains(Class); }));
+            function (Class) { return element.classList.contains(Class); }));
             return MatchClasses.indexOf(true) !== -1;
         };
         /**
          * @param {?} Toggle
          * @param {?} ClassNames
+         * @param {?} element
          * @return {?}
          */
         ClassToggler.prototype.toggleClasses = /**
          * @param {?} Toggle
          * @param {?} ClassNames
+         * @param {?} element
          * @return {?}
          */
-        function (Toggle, ClassNames) {
+        function (Toggle, ClassNames, element) {
             var _this = this;
             /** @type {?} */
             var Level = ClassNames.indexOf(Toggle);
             /** @type {?} */
             var NewClassNames = ClassNames.slice(0, Level + 1);
-            if (this.removeClasses(NewClassNames)) {
+            if (this.removeClasses(NewClassNames, element)) {
                 NewClassNames.map((/**
                  * @param {?} Class
                  * @return {?}
                  */
-                function (Class) { return _this.renderer.removeClass(_this.document.body, Class); }));
+                function (Class) { return _this.renderer.removeClass(element, Class); }));
             }
             else {
-                this.renderer.addClass(this.document.body, Toggle);
+                this.renderer.addClass(element, Toggle);
             }
         };
         ClassToggler.decorators = [
@@ -345,7 +348,8 @@
      * Allows the aside to be toggled via click.
      */
     var AsideToggleDirective = /** @class */ (function () {
-        function AsideToggleDirective(classToggler) {
+        function AsideToggleDirective(elementRef, classToggler) {
+            this.elementRef = elementRef;
             this.classToggler = classToggler;
         }
         /**
@@ -368,8 +372,8 @@
         function ($event) {
             $event.preventDefault();
             /** @type {?} */
-            var cssClass = this.bp ? "aside-menu-" + this.bp + "-show" : asideMenuCssClasses[0];
-            this.classToggler.toggleClasses(cssClass, asideMenuCssClasses);
+            var cssClass = this.bp ? "c-sidebar-" + this.bp + "-show" : asideMenuCssClasses[0];
+            this.classToggler.toggleClasses(cssClass, asideMenuCssClasses, this.elementRef.nativeElement);
         };
         AsideToggleDirective.decorators = [
             { type: core.Directive, args: [{
@@ -379,6 +383,7 @@
         ];
         /** @nocollapse */
         AsideToggleDirective.ctorParameters = function () { return [
+            { type: core.ElementRef },
             { type: ClassToggler }
         ]; };
         AsideToggleDirective.propDecorators = {
@@ -581,8 +586,8 @@
             this.document = document;
             this.renderer = renderer;
             this.hostElement = hostElement;
-            this.fixedClass = 'aside-menu-fixed';
-            renderer.addClass(hostElement.nativeElement, 'aside-menu');
+            this.fixedClass = 'c-sidebar-fixed';
+            renderer.addClass(hostElement.nativeElement, 'c-sidebar-right');
         }
         /**
          * @return {?}
@@ -602,7 +607,7 @@
          * @return {?}
          */
         function () {
-            this.renderer.removeClass(this.document.body, this.fixedClass);
+            this.renderer.removeClass(this.hostElement.nativeElement, this.fixedClass);
         };
         /**
          * @param {?=} fixed
@@ -615,7 +620,7 @@
         function (fixed) {
             if (fixed === void 0) { fixed = this.fixed; }
             if (fixed) {
-                this.renderer.addClass(this.document.body, this.fixedClass);
+                this.renderer.addClass(this.hostElement.nativeElement, this.fixedClass);
             }
         };
         /**
@@ -629,7 +634,7 @@
         function (offCanvas) {
             if (offCanvas === void 0) { offCanvas = this.offCanvas; }
             if (offCanvas) {
-                this.renderer.addClass(this.document.body, 'aside-menu-off-canvas');
+                this.renderer.addClass(this.hostElement.nativeElement, 'aside-menu-off-canvas');
             }
         };
         /**
@@ -644,14 +649,14 @@
             if (display === void 0) { display = this.display; }
             if (display !== false) {
                 /** @type {?} */
-                var cssClass = this.display ? "aside-menu-" + this.display + "-show" : asideMenuCssClasses[0];
-                this.renderer.addClass(this.document.body, cssClass);
+                var cssClass = this.display ? "c-sidebar-right-" + this.display + "-show" : asideMenuCssClasses[0];
+                this.renderer.addClass(this.hostElement.nativeElement, cssClass);
             }
         };
         AsideComponent.decorators = [
             { type: core.Component, args: [{
                         selector: 'cui-aside',
-                        template: "<aside class=\"aside-menu\">\n  <ng-content></ng-content>\n</aside>\n"
+                        template: "<aside class=\"c-sidebar-right\">\n  <ng-content></ng-content>\n</aside>\n"
                     }] }
         ];
         /** @nocollapse */
@@ -885,8 +890,8 @@
             this.document = document;
             this.renderer = renderer;
             this.hostElement = hostElement;
-            this.fixedClass = 'footer-fixed';
-            renderer.addClass(hostElement.nativeElement, 'app-footer');
+            this.fixedClass = 'c-footer-fixed';
+            renderer.addClass(hostElement.nativeElement, 'c-footer');
         }
         /**
          * @return {?}
@@ -904,7 +909,7 @@
          * @return {?}
          */
         function () {
-            this.renderer.removeClass(this.document.body, this.fixedClass);
+            this.renderer.removeClass(this.hostElement.nativeElement, this.fixedClass);
         };
         /**
          * @param {?=} fixed
@@ -917,7 +922,7 @@
         function (fixed) {
             if (fixed === void 0) { fixed = this.fixed; }
             if (fixed) {
-                this.renderer.addClass(this.document.body, this.fixedClass);
+                this.renderer.addClass(this.hostElement.nativeElement, this.fixedClass);
             }
         };
         FooterComponent.decorators = [
@@ -974,9 +979,9 @@
             this.document = document;
             this.renderer = renderer;
             this.hostElement = hostElement;
-            this.fixedClass = 'header-fixed';
-            renderer.addClass(hostElement.nativeElement, 'app-header');
-            renderer.addClass(hostElement.nativeElement, 'navbar');
+            this.fixedClass = 'c-header-fixed';
+            renderer.addClass(hostElement.nativeElement, 'c-header');
+            renderer.addClass(hostElement.nativeElement, 'c-header-light');
         }
         /**
          * @return {?}
@@ -994,7 +999,7 @@
          * @return {?}
          */
         function () {
-            this.renderer.removeClass(this.document.body, this.fixedClass);
+            this.renderer.removeClass(this.hostElement.nativeElement, this.fixedClass);
         };
         /**
          * @param {?=} fixed
@@ -1007,7 +1012,7 @@
         function (fixed) {
             if (fixed === void 0) { fixed = this.fixed; }
             if (fixed) {
-                this.renderer.addClass(this.document.body, this.fixedClass);
+                this.renderer.addClass(this.hostElement.nativeElement, this.fixedClass);
             }
         };
         HeaderComponent.decorators = [
@@ -1085,7 +1090,7 @@
         NavbarBrandComponent.decorators = [
             { type: core.Component, args: [{
                         selector: 'cui-navbar-brand',
-                        template: "<a class=\"navbar-brand\" [routerLink]=\"navbarBrandRouterLink\">\n  <ng-template [ngIf]=\"navbarBrandImg\">\n    <img *ngIf=\"navbarBrand\"\n         [cuiHtmlAttr]=\"navbarBrand\"\n         [ngClass]=\"'navbar-brand'\">\n    <img *ngIf=\"navbarBrandFull\"\n         [cuiHtmlAttr]=\"navbarBrandFull\"\n         [ngClass]=\"'navbar-brand-full'\">\n    <img *ngIf=\"navbarBrandMinimized\"\n         [cuiHtmlAttr]=\"navbarBrandMinimized\"\n         [ngClass]=\"'navbar-brand-minimized'\">\n  </ng-template>\n  <ng-template [ngIf]=\"!navbarBrandImg\">\n    <div class=\"navbar-brand-full\" [innerHTML]=\"navbarBrandText.text\"></div>\n    <div class=\"navbar-brand-minimized\" [innerHTML]=\"navbarBrandText.icon\"></div>\n  </ng-template>\n</a>\n"
+                        template: "<a class=\"c-header-brand\" [routerLink]=\"navbarBrandRouterLink\">\n  <ng-template [ngIf]=\"navbarBrandImg\">\n    <img *ngIf=\"navbarBrand\"\n         [cuiHtmlAttr]=\"navbarBrand\"\n         [ngClass]=\"'c-header-brand'\">\n    <img *ngIf=\"navbarBrandFull\"\n         [cuiHtmlAttr]=\"navbarBrandFull\"\n         [ngClass]=\"'c-header-brand-full'\">\n    <img *ngIf=\"navbarBrandMinimized\"\n         [cuiHtmlAttr]=\"navbarBrandMinimized\"\n         [ngClass]=\"'c-header-brand-minimized'\">\n  </ng-template>\n  <ng-template [ngIf]=\"!navbarBrandImg\">\n    <div class=\"c-header-brand-full\" [innerHTML]=\"navbarBrandText.text\"></div>\n    <div class=\"c-header-brand-minimized\" [innerHTML]=\"navbarBrandText.icon\"></div>\n  </ng-template>\n</a>\n"
                     }] }
         ];
         /** @nocollapse */
@@ -1153,7 +1158,7 @@
                 opened: undefined,
                 breakpoint: undefined
             };
-            renderer.addClass(hostElement.nativeElement, 'sidebar');
+            renderer.addClass(hostElement.nativeElement, 'c-sidebar');
         }
         /**
          * @return {?}
@@ -1180,7 +1185,7 @@
          * @return {?}
          */
         function () {
-            this.renderer.removeClass(this.body, 'sidebar-fixed');
+            this.renderer.removeClass(this.hostElement.nativeElement, 'c-sidebar-fixed');
             this.stateToggleSubscribe(false);
             this.outClickSubscribe(false);
         };
@@ -1195,7 +1200,7 @@
         function (compact) {
             if (compact === void 0) { compact = this.compact; }
             if (compact) {
-                this.renderer.addClass(this.body, 'sidebar-compact');
+                this.renderer.addClass(this.hostElement.nativeElement, 'c-sidebar-compact');
             }
         };
         /**
@@ -1209,7 +1214,7 @@
         function (fixed) {
             if (fixed === void 0) { fixed = this.fixed; }
             if (fixed) {
-                this.renderer.addClass(this.body, 'sidebar-fixed');
+                this.renderer.addClass(this.hostElement.nativeElement, 'c-sidebar-fixed');
             }
         };
         /**
@@ -1235,7 +1240,7 @@
         function (offCanvas) {
             if (offCanvas === void 0) { offCanvas = this.offCanvas; }
             if (offCanvas) {
-                this.renderer.addClass(this.body, 'sidebar-off-canvas');
+                this.renderer.addClass(this.hostElement.nativeElement, 'c-sidebar-off-canvas');
             }
         };
         /**
@@ -1271,8 +1276,8 @@
          * @return {?}
          */
         function () {
-            this.state.minimized = this.body.classList.contains('sidebar-minimized');
-            this.state.opened = this.body.classList.contains("sidebar-" + this.display + "-show");
+            this.state.minimized = this.hostElement.nativeElement.classList.contains('c-sidebar-minimized');
+            this.state.opened = this.hostElement.nativeElement.classList.contains("c-sidebar-" + this.display + "-show");
         };
         /**
          * @param {?=} force
@@ -1284,8 +1289,9 @@
          */
         function (force) {
             /** @type {?} */
-            var minimize = (typeof force === 'undefined') ? !this.body.classList.contains('sidebar-minimized') : force;
-            minimize ? this.renderer.addClass(this.body, 'sidebar-minimized') : this.renderer.removeClass(this.body, 'sidebar-minimized');
+            var minimize = (typeof force === 'undefined') ? !this.hostElement.nativeElement.classList.contains('c-sidebar-minimized') : force;
+            minimize ? this.renderer.addClass(this.hostElement.nativeElement, 'c-sidebar-minimized') :
+                this.renderer.removeClass(this.hostElement.nativeElement, 'c-sidebar-minimized');
             this.state.minimized = minimize;
             return minimize;
         };
@@ -1302,19 +1308,19 @@
             var toggle = (typeof state.open === 'undefined');
             /** @type {?} */
             var cssClass = Boolean(state.breakpoint) && checkBreakpoint(state.breakpoint, validBreakpoints) ?
-                "sidebar-" + state.breakpoint + "-show" :
+                "c-sidebar-" + state.breakpoint + "-show" :
                 sidebarCssClasses[0];
             /** @type {?} */
             var mobile = cssClass === sidebarCssClasses[0];
             /** @type {?} */
-            var opened = this.body.classList.contains(cssClass);
+            var opened = this.hostElement.nativeElement.classList.contains(cssClass);
             /** @type {?} */
             var open = toggle ? !opened : state.open;
             if (open) {
-                this.renderer.addClass(this.body, cssClass);
+                this.renderer.addClass(this.hostElement.nativeElement, cssClass);
             }
             else {
-                this.renderer.removeClass(this.body, cssClass);
+                this.renderer.removeClass(this.hostElement.nativeElement, cssClass);
             }
             if (mobile) {
                 if (open && (!this.outClickSubscription || this.outClickSubscription.closed)) {
@@ -1527,7 +1533,7 @@
     var SidebarMinimizerComponent = /** @class */ (function () {
         function SidebarMinimizerComponent() {
             this.role = 'button';
-            this.classes = 'sidebar-minimizer';
+            this.classes = 'c-sidebar-minimizer';
         }
         SidebarMinimizerComponent.decorators = [
             { type: core.Component, args: [{
@@ -2252,7 +2258,7 @@
         TogglerComponent.decorators = [
             { type: core.Component, args: [{
                         selector: 'cui-toggler',
-                        template: "<div #content *ngIf = \"hasContent\">\n  <ng-content></ng-content>\n</div>\n<ng-template [ngIf] = \"!hasContent\">\n  <button class=\"navbar-toggler\" type=\"button\">\n    <span class=\"navbar-toggler-icon\"></span>\n  </button>\n</ng-template>\n"
+                        template: "<div #content *ngIf = \"hasContent\">\n  <ng-content></ng-content>\n</div>\n<ng-template [ngIf] = \"!hasContent\">\n  <button class=\"c-header-toggler\" type=\"button\">\n    <span class=\"c-header-toggler-icon\"></span>\n  </button>\n</ng-template>\n"
                     }] }
         ];
         /** @nocollapse */
